@@ -1,6 +1,10 @@
+import { useContext } from 'react';
+import { CountryContext } from '../../contexts/CountryContext';
+
 const NewCountryButton = () => {
+    const { toggleStatus } = useContext(CountryContext);
     return (
-        <button>+ Add New Country</button>
+        <button onClick={toggleStatus}>+ Add New Country</button>
     );
 }
  
