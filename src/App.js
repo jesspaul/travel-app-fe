@@ -6,6 +6,7 @@ import Header from './components/Header/Header';
 import HomePage from './pages/HomePage';
 import History from './pages/History';
 import Future from './pages/Future';
+import NewCountry from './pages/NewCountry';
 
 
 function App() {
@@ -44,6 +45,13 @@ function App() {
         <Route path='/future' render={() =>
           <Future />
         }/>
+        <Route path='/new' render={() =>
+          <NewCountry
+            state={state}
+            setState={setState}
+          />
+        }/>
+        <Route render={() => <div>404 Not Found</div>} />
       </Switch>
     </div>
   );
