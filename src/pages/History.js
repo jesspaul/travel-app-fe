@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
+import NewCountryButton from '../components/NewCountryButton/NewCountryButton';
 
 const History = () => {
     return (
         <div className="History">
             History Page
-            <Link to='/new'>+ Add New Country</Link>
+            <NewCountryButton />
         </div>
     );
 }

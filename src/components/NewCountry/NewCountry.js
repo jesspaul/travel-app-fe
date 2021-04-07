@@ -14,7 +14,23 @@ const NewCountry = (props) => {
 
         props.setState(prevState => ({
             ...prevState,
-            countries: [...prevState.countries, country]
+            countries: [...prevState.countries, country],
+            newCountry: {
+                name: null,
+                visited: false,
+                userId: null,
+            }
+        }));
+    }
+
+    function handleChange(evt) {
+        props.setState(prevState => ({
+            ...prevState,
+            newCountry: {
+                ...prevState.newCountry,
+                [evt.target.name]: evt.target.value,
+                userId: props.state.user.uid,
+            }
         }));
     }
 
@@ -24,7 +40,7 @@ const NewCountry = (props) => {
             <form onSubmit={addCountry}>
                 <label>
                     Country Name:
-                    <input type="text" name="name"/>
+                    <input name="name" value={props.state.newCountry.name} onChange={handleChange}/>
                 </label>
                 <input type="submit" value="Add"/>
             </form>
