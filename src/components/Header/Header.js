@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 const Header = (props) => {
     return (
         <header>
-            <h1>Travel App</h1>
+            <Link to='/'><h1>Travel App</h1></Link>
             <ul>
                 {
                     props.user ? 
                     <>
-                        <li>History</li>
-                        <li>Future</li>
+                        <Link to='/history'><li>History</li></Link>
+                        <Link to='/future'><li>Future</li></Link>
                         <li onClick={logout}>Logout</li>
                     </>
                     :
