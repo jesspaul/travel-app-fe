@@ -1,0 +1,19 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: purple;
+}
+
+h1 {
+    margin-left: 20px;
+}
+
+header>ul {
+    list-style: none;
+    display: flex;
+}
+
+header>ul li {
+    margin: 10px;
+}
