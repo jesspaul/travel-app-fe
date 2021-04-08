@@ -7,11 +7,24 @@ const CountryGrid = () => {
     return (
         <div className="CountryGrid">
             Country Grid
-            {state.countries.length ? 
-                state.countries.map(country => <CountryCard country={country}/>)
-                :
-                <div>No Countries in List</div>
+            {state.countries.length ? (
+                state.branch === 'history' && state.countries.map(country => (
+                    country.visited && <CountryCard country={country}/>
+                ))
+                ) : (
+                    <div>No Countries in List</div>
+                )
             }
+
+            {state.countries.length ? (
+                state.branch === 'future' && state.countries.map(country => (
+                    !country.visited && <CountryCard country={country}/>
+                ))
+                ) : (
+                    <div>No Countries in List</div>
+                )
+            }
+            
         </div>
     );
 }
