@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { CountryContext } from '../../contexts/CountryContext';
-import './NewCountryButton.css';
+import './AddNewButton.css';
 
-const NewCountryButton = () => {
+const AddNewButton = () => {
     const { toggleStatus } = useContext(CountryContext);
     return (
-        <button onClick={toggleStatus}>+ Add New Country</button>
+        <button onClick={toggleStatus}>+ Add New</button>
     );
 }
  
-export default NewCountryButton;
+export default AddNewButton;

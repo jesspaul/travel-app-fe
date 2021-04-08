@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
+import { searchPhoto } from '../services/unsplash';
 
 export const CountryContext = createContext();
 
@@ -13,12 +14,14 @@ const CountryContextProvider = (props) => {
       visited: false,
       userId: null,
       flagPath: null,
+      imagePath: null,
     },
     status: 'button',
     branch: null,
     currentCountry: {},
   });
 
+  // load in all countries from the backend api
   async function getAppData() {
     try {
       const BASE_URL = 'http://localhost:3001/countries';
@@ -32,6 +35,7 @@ const CountryContextProvider = (props) => {
     }
   }
   
+  // load in list of all countries from restcountries api
   async function getCountryData() {
     try {
       const BASE_URL = 'https://restcountries.eu/rest/v2/all';
@@ -45,18 +49,24 @@ const CountryContextProvider = (props) => {
     }
   }
   
-    useEffect(() => {
-      getAppData();
-      getCountryData();
-    }, []);
+  // make api requests only on first page load
+  useEffect(() => {
+    getAppData();
+    getCountryData();
+  }, []);
 
+  // add a country to the backend api
   async function addCountry(evt) {
     if (!user) return;
 
     evt.preventDefault();
-
+    
+    // find the country flag from restcountries api
     let restCountry = state.restCountriesData.find(elem => elem.name === state.newCountry.name);
     state.newCountry.flagPath = restCountry.flag ? restCountry.flag : null;
+    // find an image of the country from unsplash api
+    const picResults = await searchPhoto(state.newCountry.name);
+    state.newCountry.imagePath = picResults.results[0].urls.regular;
 
     // make a post request to the backend api
     const BASE_URL = 'http://localhost:3001/countries';
@@ -77,6 +87,7 @@ const CountryContextProvider = (props) => {
         visited: state.branch === 'history',
         userId: null,
         flagPath: null,
+        imagePath: null,
       },
       status: 'button'
     }));

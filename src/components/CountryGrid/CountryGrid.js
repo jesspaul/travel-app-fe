@@ -4,7 +4,7 @@ import { CountryContext } from '../../contexts/CountryContext';
 import { UserContext } from '../../contexts/UserContext';
 import CountryCard from '../CountryCard/CountryCard';
 import NewCountry from '../NewCountry/NewCountry';
-import NewCountryButton from '../NewCountryButton/NewCountryButton';
+import AddNewButton from '../AddNewButton/AddNewButton';
 import './CountryGrid.css';
 
 const CountryGrid = (props) => {
@@ -35,7 +35,7 @@ const CountryGrid = (props) => {
             }
             {
                 state.status === 'button' ?
-                <NewCountryButton />
+                <AddNewButton />
                 :
                 <NewCountry />
             }

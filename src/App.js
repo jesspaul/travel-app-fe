@@ -7,7 +7,6 @@ import CountryContextProvider from './contexts/CountryContext';
 import UserContextProvider from './contexts/UserContext';
 import DetailsPage from './pages/DetailsPage';
 
-
 function App() {
   return (
     <div className="App">
