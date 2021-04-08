@@ -7,10 +7,12 @@ const CountryContextProvider = (props) => {
   const { user } = useContext(UserContext);
   const [state, setState] = useState({
     countries: [],
+    restCountriesData: [],
     newCountry: {
       name: null,
       visited: false,
       userId: null,
+      flagPath: null,
     },
     status: 'button',
     branch: null,
@@ -29,15 +31,34 @@ const CountryContextProvider = (props) => {
       console.log(error);
     }
   }
-
-  useEffect(() => {
-    getAppData();
-  }, []);
+  
+  async function getCountryData() {
+    try {
+      const BASE_URL = 'https://restcountries.eu/rest/v2/all';
+      const countriesData = await fetch(BASE_URL).then(res => res.json());
+      setState(prevState=> ({
+        ...prevState,
+        restCountriesData: countriesData
+      }))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
+    useEffect(() => {
+      getAppData();
+      getCountryData();
+    }, []);
 
   async function addCountry(evt) {
     if (!user) return;
 
     evt.preventDefault();
+
+    let restCountry = state.restCountriesData.find(elem => elem.name === state.newCountry.name);
+    state.newCountry.flagPath = restCountry.flag ? restCountry.flag : null;
+
+    // make a post request to the backend api
     const BASE_URL = 'http://localhost:3001/countries';
     const country = await fetch(BASE_URL, {
       method: 'POST',
@@ -47,6 +68,7 @@ const CountryContextProvider = (props) => {
       body: JSON.stringify(state.newCountry)
     }).then(res => res.json());
 
+    // add country to state and set newCountry back to default
     setState(prevState => ({
       ...prevState,
       countries: [...prevState.countries, country],
@@ -54,11 +76,13 @@ const CountryContextProvider = (props) => {
         name: null,
         visited: state.branch === 'history',
         userId: null,
+        flagPath: null,
       },
       status: 'button'
     }));
   }
 
+  // continuously update state as user types country name in input
   function handleChange(evt) {
     setState(prevState => ({
       ...prevState,
@@ -71,6 +95,7 @@ const CountryContextProvider = (props) => {
     }));
   }
 
+  // change status in state to show new country form or button
   function toggleStatus() {
     setState(prevState => ({
       ...prevState,
@@ -78,6 +103,7 @@ const CountryContextProvider = (props) => {
     }));
   }
 
+  // change state to show if on history or future branch
   function toggleBranch(branchPath) {
     setState(prevState => ({
       ...prevState,
@@ -85,6 +111,7 @@ const CountryContextProvider = (props) => {
     }));
   }
 
+  // capture's data of the country card that was clicked
   function selectCountry(clickedCountry) {
     setState(prevState => ({
       ...prevState,
