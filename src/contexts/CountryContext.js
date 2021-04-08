@@ -13,6 +13,7 @@ const CountryContextProvider = (props) => {
       userId: null,
     },
     status: 'button',
+    branch: null,
     currentCountry: {},
   });
 
@@ -77,6 +78,13 @@ const CountryContextProvider = (props) => {
     }));
   }
 
+  function toggleBranch(branchPath) {
+    setState(prevState => ({
+      ...prevState,
+      branch: branchPath
+    }));
+  }
+
   function selectCountry(clickedCountry) {
     setState(prevState => ({
       ...prevState,
@@ -85,7 +93,7 @@ const CountryContextProvider = (props) => {
   }
 
   return (
-    <CountryContext.Provider value={{state, setState, addCountry, handleChange, toggleStatus, selectCountry}}>
+    <CountryContext.Provider value={{state, setState, addCountry, handleChange, toggleStatus, toggleBranch, selectCountry}}>
       {props.children}
     </CountryContext.Provider>
   )
