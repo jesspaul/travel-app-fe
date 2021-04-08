@@ -1,8 +1,7 @@
 import './Header.css';
 import { login, logout } from '../../services/firebase';
 import { Link } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
-import { auth } from '../../services/firebase';
+import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 
 const Header = () => {
@@ -12,7 +11,7 @@ const Header = () => {
             <Link to='/'><h1>Travel App</h1></Link>
             <ul>
                 {
-                    user !== null ? 
+                    user ? 
                     <>
                         <li>Welcome, {user.displayName}</li>
                         <Link to='/history'><li>History</li></Link>

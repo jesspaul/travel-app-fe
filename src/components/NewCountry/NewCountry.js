@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { CountryContext } from '../../contexts/CountryContext';
 
-const NewCountry = (props) => {
-    const { state, setState, addCountry, handleChange } = useContext(CountryContext);
+const NewCountry = () => {
+    const { state, addCountry, handleChange } = useContext(CountryContext);
 
     return (
         <div className="NewCountry">
@@ -10,7 +10,7 @@ const NewCountry = (props) => {
             <form onSubmit={addCountry}>
                 <label>
                     Country Name:
-                    <input name="name" value={props.state.newCountry.name} onChange={handleChange}/>
+                    <input name="name" value={state.newCountry.name} onChange={handleChange}/>
                 </label>
                 <input type="submit" value="Add"/>
             </form>

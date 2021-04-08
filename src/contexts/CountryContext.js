@@ -1,9 +1,10 @@
 import { createContext, useContext, useState } from 'react';
+import { UserContext } from '../contexts/UserContext';
 
 export const CountryContext = createContext();
 
 const CountryContextProvider = (props) => {
-  const { user } = useContext()
+  const { user } = useContext(UserContext);
   const [state, setState] = useState({
     countries: [],
     newCountry: {
@@ -15,7 +16,7 @@ const CountryContextProvider = (props) => {
   });
 
   async function addCountry(evt) {
-    if (!state.user) return;
+    if (!user) return;
 
     evt.preventDefault();
     const BASE_URL = 'http://localhost:3001/countries';
@@ -45,7 +46,7 @@ const CountryContextProvider = (props) => {
       newCountry: {
         ...prevState.newCountry,
         [evt.target.name]: evt.target.value,
-        userId: state.user.uid,
+        userId: user.uid,
       }
     }));
   }

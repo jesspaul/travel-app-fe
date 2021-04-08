@@ -19,14 +19,18 @@ function App() {
           <HomePage />
         }/>
         <Route path='/history' render={() =>
-          <CountryContextProvider>
-            <History />
-          </CountryContextProvider>
+          <UserContextProvider>
+            <CountryContextProvider>
+              <History />
+            </CountryContextProvider>
+          </UserContextProvider>
         }/>
         <Route path='/future' render={() =>
-          <CountryContextProvider>
-            <Future />
-          </CountryContextProvider>
+          <UserContextProvider>
+            <CountryContextProvider>
+              <Future />
+            </CountryContextProvider>
+          </UserContextProvider>
         }/>
         <Route render={() => <div>404 Not Found</div>} />
       </Switch>
