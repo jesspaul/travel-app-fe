@@ -1,37 +1,36 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CountryContext } from '../../contexts/CountryContext';
+import { UserContext } from '../../contexts/UserContext';
 import CountryCard from '../CountryCard/CountryCard';
 import './CountryGrid.css';
 
 const CountryGrid = (props) => {
     const { state, selectCountry } = useContext(CountryContext);
+    const { user } = useContext(UserContext);
+
+    const renderCards = () => {
+        if (props.branch === 'history' && user) {
+            return state.countries.map((country, idx) =>
+                (country.visited && country.userId === user.uid) && 
+                <Link to='/details' key={idx} onClick={() => selectCountry(country)}>
+                    <CountryCard country={country}/>
+                </Link>
+            );
+        } else if (props.branch === 'future' && user) {
+            return state.countries.map((country, idx) => (
+                (!country.visited && country.userId === user.uid) && 
+                <Link to='/details' key={idx} onClick={() => selectCountry(country)}>
+                    <CountryCard country={country}/>
+                </Link>
+            ))
+        }
+    }
     return (
         <div className="CountryGrid">
-            {state.countries.length ? (
-                props.branch === 'history' && state.countries.map(country => (
-                    country.visited && 
-                    <Link to='/details' onClick={() => selectCountry(country)}>
-                        <CountryCard country={country}/>
-                    </Link>
-                ))
-                ) : (
-                    <div>No Countries in List</div>
-                )
+            {state.countries.length ? renderCards()
+                : <div>No Countries in List</div>
             }
-
-            {state.countries.length ? (
-                props.branch === 'future' && state.countries.map(country => (
-                    !country.visited && 
-                    <Link to='/details' onClick={() => selectCountry(country)}>
-                        <CountryCard country={country}/>
-                    </Link>
-                ))
-                ) : (
-                    <div>No Countries in List</div>
-                )
-            }
-            
         </div>
     );
 }
