@@ -110,7 +110,7 @@ const CountryContextProvider = (props) => {
   function toggleStatus() {
     setState(prevState => ({
       ...prevState,
-      status: 'new-country'
+      status: 'new-form'
     }));
   }
 
