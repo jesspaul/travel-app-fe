@@ -6,3 +6,7 @@
     align-items: center;
     padding: 50px;
 }
+
+.CountryGrid, .CountryGrid div {
+    border: 1px solid purple;
+}
