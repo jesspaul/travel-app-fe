@@ -13,14 +13,14 @@ const CountryGrid = (props) => {
         if (props.branch === 'history' && user) {
             return state.countries.map((country, idx) =>
                 (country.visited && country.userId === user.uid) && 
-                <Link to='/details' key={idx} onClick={() => selectCountry(country)}>
+                <Link className='body-link' to='/details' key={idx} onClick={() => selectCountry(country)}>
                     <CountryCard country={country}/>
                 </Link>
             );
         } else if (props.branch === 'future' && user) {
             return state.countries.map((country, idx) => (
                 (!country.visited && country.userId === user.uid) && 
-                <Link to='/details' key={idx} onClick={() => selectCountry(country)}>
+                <Link className='body-link' to='/details' key={idx} onClick={() => selectCountry(country)}>
                     <CountryCard country={country}/>
                 </Link>
             ))

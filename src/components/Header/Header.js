@@ -10,15 +10,15 @@ const Header = () => {
     const { toggleBranch } = useContext(CountryContext);
     return (
         <header>
-            <Link className='link-item' to='/'><h1>Travel App</h1></Link>
+            <Link className='nav-link' to='/'><h1>Travel App</h1></Link>
             <ul>
                 {
                     user ? 
                     <>
                         <li>Welcome, {user.displayName}</li>
-                        <Link className='link-item' onClick={() => toggleBranch('history')} to='/history'><li>History</li></Link>
-                        <Link className='link-item' onClick={() => toggleBranch('future')} to='/future'><li>Future</li></Link>
-                        <Link to='/' className='link-item'><li onClick={logout}>Logout</li></Link>
+                        <Link className='nav-link' onClick={() => toggleBranch('history')} to='/history'><li>History</li></Link>
+                        <Link className='nav-link' onClick={() => toggleBranch('future')} to='/future'><li>Future</li></Link>
+                        <Link to='/' className='nav-link'><li onClick={logout}>Logout</li></Link>
                     </>
                     :
                     <li onClick={login}>Login</li>

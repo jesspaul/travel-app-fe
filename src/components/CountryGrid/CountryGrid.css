@@ -1,12 +1,8 @@
 .CountryGrid {
-    margin: 0 100px;
+    margin: 0 80px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
     padding: 50px;
-}
-
-.CountryGrid, .CountryGrid div {
-    border: 1px solid purple;
 }

@@ -1,3 +1,8 @@
 .NewCountry {
     background-color: skyblue;
+    margin: 30px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }

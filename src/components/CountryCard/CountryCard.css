@@ -1,8 +1,25 @@
 .CountryCard {
+    display: flex;
+    flex-direction: column;
     margin: 15px;
-    padding: 100px 50px;
+    padding: 50px;
+    background-color: lightcyan;
+}
+
+.CountryCard > * {
+    text-decoration: none;
+}
+
+.CountryCard:hover {
+    background-color: lavender;
+}
+
+.country-name {
+    text-decoration: none;
 }
 
 .flag {
-    width: 300px;
+    width: 200px;
+    height: 130px;
+    margin: 20px 0;
 }
