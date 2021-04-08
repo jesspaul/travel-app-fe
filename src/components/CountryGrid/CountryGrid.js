@@ -4,14 +4,14 @@ import { CountryContext } from '../../contexts/CountryContext';
 import CountryCard from '../CountryCard/CountryCard';
 import './CountryGrid.css';
 
-const CountryGrid = () => {
-    const { state } = useContext(CountryContext);
+const CountryGrid = (props) => {
+    const { state, selectCountry } = useContext(CountryContext);
     return (
         <div className="CountryGrid">
             {state.countries.length ? (
-                state.branch === 'history' && state.countries.map(country => (
+                props.branch === 'history' && state.countries.map(country => (
                     country.visited && 
-                    <Link to='/details'>
+                    <Link to='/details' onClick={() => selectCountry(country)}>
                         <CountryCard country={country}/>
                     </Link>
                 ))
@@ -21,9 +21,9 @@ const CountryGrid = () => {
             }
 
             {state.countries.length ? (
-                state.branch === 'future' && state.countries.map(country => (
+                props.branch === 'future' && state.countries.map(country => (
                     !country.visited && 
-                    <Link to='/details'>
+                    <Link to='/details' onClick={() => selectCountry(country)}>
                         <CountryCard country={country}/>
                     </Link>
                 ))

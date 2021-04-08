@@ -3,7 +3,6 @@ import { login, logout } from '../../services/firebase';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
-import { CountryContext } from '../../contexts/CountryContext';
 
 const Header = () => {
     const { user } = useContext(UserContext);

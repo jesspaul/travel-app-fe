@@ -12,7 +12,8 @@ const CountryContextProvider = (props) => {
       visited: false,
       userId: null,
     },
-    status: 'button'
+    status: 'button',
+    currentCountry: {},
   });
 
   async function getAppData() {
@@ -76,8 +77,15 @@ const CountryContextProvider = (props) => {
     }));
   }
 
+  function selectCountry(clickedCountry) {
+    setState(prevState => ({
+      ...prevState,
+      currentCountry: clickedCountry
+    }))
+  }
+
   return (
-    <CountryContext.Provider value={{state, setState, addCountry, handleChange, toggleStatus}}>
+    <CountryContext.Provider value={{state, setState, addCountry, handleChange, toggleStatus, selectCountry}}>
       {props.children}
     </CountryContext.Provider>
   )
