@@ -4,11 +4,11 @@ import NewCountry from '../components/NewCountry/NewCountry';
 import { CountryContext } from '../contexts/CountryContext';
 import CountryGrid from '../components/CountryGrid/CountryGrid';
 
-const History = () => {
+const ListPage = () => {
     const { state } = useContext(CountryContext);
     return (
-        <div className="History">
-            History Page
+        <div className="ListPage">
+            <h2>{state.branch[0].toUpperCase() + state.branch.slice(1) + ' Page'}</h2>
             <CountryGrid />
             {
                 state.status === 'button' ?
@@ -20,4 +20,4 @@ const History = () => {
     );
 }
  
-export default History;
+export default ListPage;

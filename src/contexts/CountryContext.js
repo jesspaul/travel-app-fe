@@ -12,7 +12,8 @@ const CountryContextProvider = (props) => {
       visited: false,
       userId: null,
     },
-    status: 'button'
+    status: 'button',
+    branch: null
   });
 
   async function addCountry(evt) {
@@ -33,7 +34,7 @@ const CountryContextProvider = (props) => {
       countries: [...prevState.countries, country],
       newCountry: {
         name: null,
-        visited: false,
+        visited: state.branch === 'history',
         userId: null,
       },
       status: 'button'
@@ -46,6 +47,7 @@ const CountryContextProvider = (props) => {
       newCountry: {
         ...prevState.newCountry,
         [evt.target.name]: evt.target.value,
+        visited: state.branch === 'history',
         userId: user.uid,
       }
     }));
@@ -58,8 +60,15 @@ const CountryContextProvider = (props) => {
     }));
   }
 
+  function toggleBranch(path) {
+    setState(prevState => ({
+      ...prevState,
+      branch: path
+    }));
+  }
+
   return (
-    <CountryContext.Provider value={{state, setState, addCountry, handleChange, toggleStatus}}>
+    <CountryContext.Provider value={{state, setState, addCountry, handleChange, toggleStatus, toggleBranch}}>
       {props.children}
     </CountryContext.Provider>
   )
