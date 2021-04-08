@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { CountryContext } from '../../contexts/CountryContext';
+import './NewCountry.css';
 
 const NewCountry = () => {
     const { state, addCountry, handleChange } = useContext(CountryContext);

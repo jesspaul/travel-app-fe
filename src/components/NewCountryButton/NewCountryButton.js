@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { CountryContext } from '../../contexts/CountryContext';
+import './NewCountryButton.css';
 
 const NewCountryButton = () => {
     const { toggleStatus } = useContext(CountryContext);

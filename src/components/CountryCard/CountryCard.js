@@ -1,3 +1,5 @@
+import './CountryCard.css';
+
 const CountryCard = (props) => {
     return (
         <div className="CountryCard">

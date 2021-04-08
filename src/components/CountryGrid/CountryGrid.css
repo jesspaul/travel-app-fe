@@ -1,0 +1,8 @@
+.CountryGrid {
+    margin: 0 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 50px;
+}
