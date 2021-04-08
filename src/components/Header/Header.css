@@ -21,7 +21,7 @@ header>ul li {
     color: white;
 }
 
-.link-item:hover {
+.nav-link:hover {
     cursor: pointer;
     color: gray;
 }

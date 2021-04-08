@@ -7,7 +7,7 @@ const NewCountry = () => {
 
     return (
         <div className="NewCountry">
-            <h2>Add New Country</h2>
+            <h3>Add New Country</h3>
             <form onSubmit={addCountry}>
                 <label>
                     Country Name:

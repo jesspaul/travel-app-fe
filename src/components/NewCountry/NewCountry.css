@@ -1,8 +1,14 @@
 .NewCountry {
     background-color: skyblue;
-    margin: 30px;
-    height: 200px;
+    margin: 15px;
+    padding: 50px;
+    width: 300px;
+    height: 310px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
+}
+
+.NewCountry form {
+    margin-top: 20px;
 }

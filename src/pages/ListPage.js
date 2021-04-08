@@ -11,12 +11,6 @@ const ListPage = (props) => {
         <div className="ListPage">
             <h2>{branch[0].toUpperCase() + branch.slice(1) + ' Page'}</h2>
             <CountryGrid branch={branch} />
-            {
-                state.status === 'button' ?
-                <NewCountryButton />
-                :
-                <NewCountry />
-            }
         </div>
     );
 }

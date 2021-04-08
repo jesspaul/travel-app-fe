@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { CountryContext } from '../../contexts/CountryContext';
 import { UserContext } from '../../contexts/UserContext';
 import CountryCard from '../CountryCard/CountryCard';
+import NewCountry from '../NewCountry/NewCountry';
+import NewCountryButton from '../NewCountryButton/NewCountryButton';
 import './CountryGrid.css';
 
 const CountryGrid = (props) => {
@@ -30,6 +32,12 @@ const CountryGrid = (props) => {
         <div className="CountryGrid">
             {state.countries.length ? renderCards()
                 : <div>No Countries in List</div>
+            }
+            {
+                state.status === 'button' ?
+                <NewCountryButton />
+                :
+                <NewCountry />
             }
         </div>
     );
