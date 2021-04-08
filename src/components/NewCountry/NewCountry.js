@@ -11,8 +11,15 @@ const NewCountry = () => {
             <form onSubmit={addCountry}>
                 <label>
                     Country Name:
-                    <input name="name" value={state.newCountry.name} onChange={handleChange}/>
+                    <input name="name" value={state.newCountry.name} onChange={handleChange} required />
                 </label>
+                {
+                    state.branch === 'history' &&
+                <label>
+                    Month Visited:
+                    <input type='month' name="date" value={state.newCountry.date} onChange={handleChange} required />
+                </label>
+                }
                 <input type="submit" value="Add"/>
             </form>
         </div>
