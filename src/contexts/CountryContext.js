@@ -1,10 +1,10 @@
-import { createContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 export const CountryContext = createContext();
 
 const CountryContextProvider = (props) => {
+  const { user } = useContext()
   const [state, setState] = useState({
-    user: null,
     countries: [],
     newCountry: {
       name: null,

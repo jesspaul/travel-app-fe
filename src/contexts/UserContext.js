@@ -7,13 +7,13 @@ const UserContextProvider = props => {
     const [user, setUser] = useState(null);
     
       useEffect(() => {
-        auth.onAuthStateChanged(user => {
-          setUser(user);
+        auth.onAuthStateChanged(userInfo => {
+          setUser(userInfo);
         });
       }, []);
 
       return (
-          <UserContext.Provider value={user, setUser}>
+          <UserContext.Provider value={{user, setUser}}>
               {props.children}
           </UserContext.Provider>
       )
