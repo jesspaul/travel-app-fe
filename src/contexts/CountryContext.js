@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
 
 export const CountryContext = createContext();
@@ -15,6 +15,23 @@ const CountryContextProvider = (props) => {
     status: 'button',
     branch: null
   });
+
+  async function getAppData() {
+    try {
+      const BASE_URL = 'http://localhost:3001/countries';
+      const countries = await fetch(BASE_URL).then(res => res.json());
+      setState(prevState => ({
+        ...prevState,
+        countries,
+      }))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getAppData();
+  }, []);
 
   async function addCountry(evt) {
     if (!user) return;
