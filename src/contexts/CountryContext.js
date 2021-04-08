@@ -12,8 +12,7 @@ const CountryContextProvider = (props) => {
       visited: false,
       userId: null,
     },
-    status: 'button',
-    branch: null
+    status: 'button'
   });
 
   async function getAppData() {
@@ -77,15 +76,8 @@ const CountryContextProvider = (props) => {
     }));
   }
 
-  function toggleBranch(path) {
-    setState(prevState => ({
-      ...prevState,
-      branch: path
-    }));
-  }
-
   return (
-    <CountryContext.Provider value={{state, setState, addCountry, handleChange, toggleStatus, toggleBranch}}>
+    <CountryContext.Provider value={{state, setState, addCountry, handleChange, toggleStatus}}>
       {props.children}
     </CountryContext.Provider>
   )

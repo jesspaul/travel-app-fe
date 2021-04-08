@@ -4,11 +4,12 @@ import NewCountry from '../components/NewCountry/NewCountry';
 import { CountryContext } from '../contexts/CountryContext';
 import CountryGrid from '../components/CountryGrid/CountryGrid';
 
-const ListPage = () => {
+const ListPage = (props) => {
     const { state } = useContext(CountryContext);
+    const branch = props.match.path.slice(1);
     return (
         <div className="ListPage">
-            <h2>{state.branch[0].toUpperCase() + state.branch.slice(1) + ' Page'}</h2>
+            <h2>{branch[0].toUpperCase() + branch.slice(1) + ' Page'}</h2>
             <CountryGrid />
             {
                 state.status === 'button' ?

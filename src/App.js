@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import ListPage from './pages/ListPage';
 import CountryContextProvider from './contexts/CountryContext';
 import UserContextProvider from './contexts/UserContext';
+import DetailsPage from './pages/DetailsPage';
 
 
 function App() {
@@ -17,12 +18,15 @@ function App() {
               <Route exact path='/' render={() =>
                 <HomePage />
               }/>
-              <Route path='/history' render={() =>
-                    <ListPage />
+              <Route path='/history' render={(props) =>
+                    <ListPage {...props} />
               }/>
-              <Route path='/future' render={() =>
-                    <ListPage />
-                  }/>
+              <Route path='/future' render={(props) =>
+                    <ListPage {...props} />
+              }/>
+              <Route path='/details' render={() =>
+                    <DetailsPage />
+              }/>
               <Route render={() => <div>404 Not Found</div>} />
             </Switch>
           </CountryContextProvider>
