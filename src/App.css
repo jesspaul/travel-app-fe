@@ -13,3 +13,19 @@ h2 {
   text-decoration: none;
   color: inherit;
 }
+
+button {
+  background-color: #C0C4B6;
+  border: none;
+  font-weight: bold;
+  border-radius: .5rem;
+  padding: 10px;
+  width: 200px;
+  transition: .4s;
+}
+
+button:hover {
+  background-color: white;
+  cursor: pointer;
+  box-shadow: 5px 5px 8px 1px #dfd5cd;
+}

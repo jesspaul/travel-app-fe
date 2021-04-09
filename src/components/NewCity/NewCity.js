@@ -19,7 +19,7 @@ const NewCity = () => {
                     <input type='date' name="date" value='' required />
                 </label>
                 }
-                <input type="submit" value="Add"/>
+                <button>Add</button>
             </form>
         </div>
     );

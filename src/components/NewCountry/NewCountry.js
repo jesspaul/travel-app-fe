@@ -20,7 +20,7 @@ const NewCountry = () => {
                     <input className='input-field' type='month' name="date" value={state.newCountry.date} onChange={handleChange} required />
                 </label>
                 }
-                <input type="submit" value="Add"/>
+                <button>Add</button>
             </form>
         </div>
     );

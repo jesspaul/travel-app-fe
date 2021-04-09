@@ -4,6 +4,7 @@
     margin: 15px;
     padding: 50px;
     background-color: #fcfcfc;
+    transition: .4s;
 }
 
 .CountryCard > * {
@@ -12,7 +13,17 @@
 
 .CountryCard:hover {
     background-color: white;
-    box-shadow: 5px 5px 8px 1px #bfbfbf;
+    box-shadow: 5px 5px 8px 1px #dfd5cd;
+    border-radius: .5rem;
+}
+
+.CountryCard img {
+    opacity: .7;
+    transition: .4s;
+}
+
+.CountryCard:hover img {
+    opacity: 1;
 }
 
 .country-name {

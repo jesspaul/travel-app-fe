@@ -5,7 +5,7 @@ import './AddNewButton.css';
 const AddNewButton = () => {
     const { toggleStatus } = useContext(CountryContext);
     return (
-        <button onClick={toggleStatus}>+ Add New</button>
+        <button className='add-new' onClick={toggleStatus}>+ Add New</button>
     );
 }
  
