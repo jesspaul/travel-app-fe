@@ -1,8 +1,10 @@
+import './City.css';
+
 const City = () => {
     return (
-        <div className="City">
-            City
-        </div>
+        <li className="City">
+            <h3>City Name</h3>
+        </li>
     );
 }
  
