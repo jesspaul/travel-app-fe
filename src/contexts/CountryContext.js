@@ -67,6 +67,12 @@ const CountryContextProvider = (props) => {
     // find an image of the country from unsplash api
     const picResults = await searchPhoto(state.newCountry.name);
     state.newCountry.imagePath = picResults.results[0].urls.regular;
+    
+    // change date string to month, year
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const year = state.newCountry.date.slice(0, 4);
+    const month = months[parseInt(state.newCountry.date.slice(5)) - 1];
+    state.newCountry.date = `${month}, ${year}`;
 
     // make a post request to the backend api
     const BASE_URL = 'http://localhost:3001/countries';
