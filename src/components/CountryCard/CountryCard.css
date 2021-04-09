@@ -3,7 +3,7 @@
     flex-direction: column;
     margin: 15px;
     padding: 50px;
-    background-color: lightcyan;
+    background-color: #fcfcfc;
 }
 
 .CountryCard > * {
@@ -11,7 +11,8 @@
 }
 
 .CountryCard:hover {
-    background-color: lavender;
+    background-color: white;
+    box-shadow: 5px 5px 8px 1px #bfbfbf;
 }
 
 .country-name {
