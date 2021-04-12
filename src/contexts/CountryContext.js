@@ -70,10 +70,12 @@ const CountryContextProvider = (props) => {
     state.newCountry.imagePath = picResults.results[0].urls.regular;
     
     // change date string to month, year
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const year = state.newCountry.date.slice(0, 4);
-    const month = months[parseInt(state.newCountry.date.slice(5)) - 1];
-    state.newCountry.date = `${month}, ${year}`;
+    if (state.branch === 'history') {
+      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const year = state.newCountry.date.slice(0, 4);
+      const month = months[parseInt(state.newCountry.date.slice(5)) - 1];
+      state.newCountry.date = `${month}, ${year}`;
+    }
 
     console.log({...state.newCountry, uid: user.uid});
 
