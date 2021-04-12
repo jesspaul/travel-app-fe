@@ -12,9 +12,9 @@ const CountryContextProvider = (props) => {
     newCountry: {
       name: null,
       visited: false,
-      userId: null,
+      uid: null,
       flagPath: null,
-      imagePath: null,
+      imagePath: null
     },
     status: 'button',
     branch: null,
@@ -23,9 +23,10 @@ const CountryContextProvider = (props) => {
 
   // load in all countries from the backend api
   async function getAppData() {
+    if (!user) return;
     try {
-      const BASE_URL = 'http://localhost:3001/countries';
-      const countries = await fetch(BASE_URL).then(res => res.json());
+      const URL = `http://localhost:3001/countries?uid=${user.uid}`;
+      const countries = await fetch(URL).then(res => res.json());
       setState(prevState => ({
         ...prevState,
         countries,
@@ -53,7 +54,7 @@ const CountryContextProvider = (props) => {
   useEffect(() => {
     getAppData();
     getCountryData();
-  }, []);
+  }, [user]);
 
   // add a country to the backend api
   async function addCountry(evt) {
@@ -74,24 +75,28 @@ const CountryContextProvider = (props) => {
     const month = months[parseInt(state.newCountry.date.slice(5)) - 1];
     state.newCountry.date = `${month}, ${year}`;
 
+    console.log({...state.newCountry, uid: user.uid});
+
     // make a post request to the backend api
     const BASE_URL = 'http://localhost:3001/countries';
-    const country = await fetch(BASE_URL, {
+    const fetchCountries = await fetch(BASE_URL, {
       method: 'POST',
       headers: {
           'Content-type': 'Application/json'
       },
-      body: JSON.stringify(state.newCountry)
+      body: JSON.stringify({...state.newCountry, uid: user.uid})
     }).then(res => res.json());
+
+    console.log('fetch countries: ', fetchCountries)
 
     // add country to state and set newCountry back to default
     setState(prevState => ({
       ...prevState,
-      countries: [...prevState.countries, country],
+      fetchCountries,
       newCountry: {
         name: null,
         visited: state.branch === 'history',
-        userId: null,
+        uid: null,
         flagPath: null,
         imagePath: null,
       },
@@ -106,8 +111,7 @@ const CountryContextProvider = (props) => {
       newCountry: {
         ...prevState.newCountry,
         [evt.target.name]: evt.target.value,
-        visited: state.branch === 'history',
-        userId: user.uid,
+        visited: state.branch === 'history'
       }
     }));
   }
@@ -136,8 +140,21 @@ const CountryContextProvider = (props) => {
     }))
   }
 
+  async function handleDelete(countryId) {
+    if(!state.user) return;
+    const URL = `http://localhost:3001/countries/${countryId}`;
+    const countries = await fetch(URL, {
+      method: 'DELETE'
+    }).then(res => res.json());
+
+    setState(prevState => ({
+      ...prevState,
+      countries
+    }));
+  }
+
   return (
-    <CountryContext.Provider value={{state, setState, addCountry, handleChange, toggleStatus, toggleBranch, selectCountry}}>
+    <CountryContext.Provider value={{state, setState, addCountry, handleChange, toggleStatus, toggleBranch, selectCountry, handleDelete}}>
       {props.children}
     </CountryContext.Provider>
   )

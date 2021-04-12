@@ -1,27 +1,29 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CountryContext } from '../../contexts/CountryContext';
-import { UserContext } from '../../contexts/UserContext';
 import CountryCard from '../CountryCard/CountryCard';
 import NewCountry from '../NewCountry/NewCountry';
 import AddNewButton from '../AddNewButton/AddNewButton';
 import './CountryGrid.css';
+import { UserContext } from '../../contexts/UserContext';
 
 const CountryGrid = (props) => {
-    const { state, selectCountry } = useContext(CountryContext);
     const { user } = useContext(UserContext);
+    const { state, selectCountry } = useContext(CountryContext);
 
     const renderCards = () => {
-        if (props.branch === 'history' && user) {
+        if (props.branch === 'history') {
+            console.log('history branch')
             return state.countries.map((country, idx) =>
-                (country.visited && country.userId === user.uid) && 
+                country.visited && 
                 <Link className='body-link' to='/details' key={idx} onClick={() => selectCountry(country)}>
                     <CountryCard country={country}/>
                 </Link>
             );
-        } else if (props.branch === 'future' && user) {
+        } else if (props.branch === 'future') {
+            console.log('future branch')
             return state.countries.map((country, idx) => (
-                (!country.visited && country.userId === user.uid) && 
+                !country.visited && 
                 <Link className='body-link' to='/details' key={idx} onClick={() => selectCountry(country)}>
                     <CountryCard country={country}/>
                 </Link>
