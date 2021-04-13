@@ -139,8 +139,10 @@ const CountryContextProvider = (props) => {
   }
 
   async function handleDelete(countryId) {
-    if(!state.user) return;
+    console.log('delete function for id: ', countryId);
+    if(!user) return;
     const URL = `http://localhost:3001/countries/${countryId}`;
+    console.log('url: ', URL);
     const countries = await fetch(URL, {
       method: 'DELETE'
     }).then(res => res.json());
