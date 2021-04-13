@@ -21,7 +21,7 @@ const Header = () => {
                         <Link to='/' className='nav-link'><li onClick={logout}>Logout</li></Link>
                     </>
                     :
-                    <li onClick={login}>Login</li>
+                    <li className='nav-link' onClick={login}>Login</li>
                 }
             </ul>
         </header>
