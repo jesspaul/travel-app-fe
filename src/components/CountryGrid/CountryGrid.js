@@ -13,7 +13,6 @@ const CountryGrid = (props) => {
 
     const renderCards = () => {
         if (props.branch === 'history') {
-            console.log('history branch')
             return state.countries.map((country, idx) =>
                 country.visited && 
                 <Link className='body-link' to='/details' key={idx} onClick={() => selectCountry(country)}>
@@ -21,7 +20,6 @@ const CountryGrid = (props) => {
                 </Link>
             );
         } else if (props.branch === 'future') {
-            console.log('future branch')
             return state.countries.map((country, idx) => (
                 !country.visited && 
                 <Link className='body-link' to='/details' key={idx} onClick={() => selectCountry(country)}>

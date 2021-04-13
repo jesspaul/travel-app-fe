@@ -77,11 +77,9 @@ const CountryContextProvider = (props) => {
       state.newCountry.date = `${month}, ${year}`;
     }
 
-    console.log({...state.newCountry, uid: user.uid});
-
     // make a post request to the backend api
     const BASE_URL = 'http://localhost:3001/countries';
-    const fetchCountries = await fetch(BASE_URL, {
+    const countries = await fetch(BASE_URL, {
       method: 'POST',
       headers: {
           'Content-type': 'Application/json'
@@ -89,12 +87,10 @@ const CountryContextProvider = (props) => {
       body: JSON.stringify({...state.newCountry, uid: user.uid})
     }).then(res => res.json());
 
-    console.log('fetch countries: ', fetchCountries)
-
     // add country to state and set newCountry back to default
-    setState(prevState => ({
+    setState((prevState) => ({
       ...prevState,
-      fetchCountries,
+      countries,
       newCountry: {
         name: null,
         visited: state.branch === 'history',
