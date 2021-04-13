@@ -19,6 +19,7 @@ const CountryContextProvider = (props) => {
     status: 'button',
     branch: null,
     currentCountry: {},
+    editMode: false,
   });
 
   // load in all countries from the backend api
@@ -56,50 +57,77 @@ const CountryContextProvider = (props) => {
     getCountryData();
   }, [user]);
 
-  // add a country to the backend api
-  async function addCountry(evt) {
+  // handle form submission to add new country or update country in backend api
+  async function handleSubmit(evt) {
     if (!user) return;
 
     evt.preventDefault();
-    
-    // find the country flag from restcountries api
-    let restCountry = state.restCountriesData.find(elem => elem.name === state.newCountry.name);
-    state.newCountry.flagPath = restCountry.flag ? restCountry.flag : null;
-    // find an image of the country from unsplash api
-    const picResults = await searchPhoto(state.newCountry.name);
-    state.newCountry.imagePath = picResults.results[0].urls.regular;
-    
-    // change date string to month, year
-    if (state.branch === 'history') {
-      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-      const year = state.newCountry.date.slice(0, 4);
-      const month = months[parseInt(state.newCountry.date.slice(5)) - 1];
-      state.newCountry.date = `${month}, ${year}`;
-    }
-
-    // make a post request to the backend api
     const BASE_URL = 'http://localhost:3001/countries';
-    const countries = await fetch(BASE_URL, {
-      method: 'POST',
-      headers: {
-          'Content-type': 'Application/json'
-      },
-      body: JSON.stringify({...state.newCountry, uid: user.uid})
-    }).then(res => res.json());
 
-    // add country to state and set newCountry back to default
-    setState((prevState) => ({
-      ...prevState,
-      countries,
-      newCountry: {
-        name: null,
-        visited: state.branch === 'history',
-        uid: null,
-        flagPath: null,
-        imagePath: null,
-      },
-      status: 'button'
-    }));
+    if (!state.editMode) {
+      // find the country flag from restcountries api
+      let restCountry = state.restCountriesData.find(elem => elem.name === state.newCountry.name);
+      state.newCountry.flagPath = restCountry.flag ? restCountry.flag : null;
+      // find an image of the country from unsplash api
+      const picResults = await searchPhoto(state.newCountry.name);
+      state.newCountry.imagePath = picResults.results[0].urls.regular;
+      
+      // change date string to month, year
+      if (state.branch === 'history') {
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const year = state.newCountry.date.slice(0, 4);
+        const month = months[parseInt(state.newCountry.date.slice(5)) - 1];
+        state.newCountry.date = `${month}, ${year}`;
+      }
+  
+      // make a post request to the backend api
+      const countries = await fetch(BASE_URL, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'Application/json'
+        },
+        body: JSON.stringify({...state.newCountry, uid: user.uid})
+      }).then(res => res.json());
+  
+      // add country to state and set newCountry back to default
+      setState((prevState) => ({
+        ...prevState,
+        countries,
+        newCountry: {
+          name: null,
+          visited: state.branch === 'history',
+          uid: null,
+          flagPath: null,
+          imagePath: null,
+        },
+        status: 'button'
+      }));
+    } else {
+      const { name, date } = state.newCountry;
+      console.log(state.newCountry)
+      console.log(name)
+      console.log(date)
+      const countries = await fetch(`${BASE_URL}/${state.currentCountry._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'Application/json'
+        },
+        body: JSON.stringify({name, date})
+      }).then(res => res.json());
+
+      setState(prevState => ({
+        ...prevState,
+        countries,
+        newCountry: {
+          name: null,
+          visited: state.branch === 'history',
+          uid: null,
+          flagPath: null,
+          imagePath: null,
+        },
+        editMode: false
+      }))
+    }
   }
 
   // continuously update state as user types country name in input
@@ -139,10 +167,8 @@ const CountryContextProvider = (props) => {
   }
 
   async function handleDelete(countryId) {
-    console.log('delete function for id: ', countryId);
     if(!user) return;
     const URL = `http://localhost:3001/countries/${countryId}`;
-    console.log('url: ', URL);
     const countries = await fetch(URL, {
       method: 'DELETE'
     }).then(res => res.json());
@@ -153,8 +179,24 @@ const CountryContextProvider = (props) => {
     }));
   }
 
+  async function handleEdit() {
+    const current = state.currentCountry;
+    setState(prevState => ({
+      ...prevState,
+      // newCountry: {...current},
+      editMode: true
+    }));
+  }
+
+  function toggleEditMode() {
+    setState(prevState => ({
+      ...prevState,
+      editMode: prevState.editMode ? false : true
+    }));
+  }
+
   return (
-    <CountryContext.Provider value={{state, setState, addCountry, handleChange, toggleStatus, toggleBranch, selectCountry, handleDelete}}>
+    <CountryContext.Provider value={{state, setState, handleSubmit, handleChange, toggleStatus, toggleBranch, selectCountry, handleDelete, handleEdit, toggleEditMode}}>
       {props.children}
     </CountryContext.Provider>
   )
