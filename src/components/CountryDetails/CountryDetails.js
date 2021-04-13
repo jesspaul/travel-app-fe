@@ -4,7 +4,7 @@ import { CountryContext } from '../../contexts/CountryContext';
 import placeholderImg from '../../img/maps.jpg';
 // import BackButton from '../BackButton/BackButton';
 import CityList from '../CityList/CityList';
-import NewCountry from '../NewCountry/NewCountry';
+import CountryForm from '../CountryForm/CountryForm';
 import './CountryDetails.css';
 
 const CountryDetails = () => {
@@ -19,7 +19,7 @@ const CountryDetails = () => {
             <Link to={`/${state.branch}`}>
                 <button onClick={() => handleDelete(state.currentCountry._id)}>Delete Country</button>
             </Link>
-            { state.editMode ? <NewCountry /> : <button onClick={toggleEditMode}>Edit Country</button>}
+            { state.editMode ? <CountryForm /> : <button onClick={toggleEditMode}>Edit Country</button>}
             {/* <BackButton /> */}
         </div>
     );

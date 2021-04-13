@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CountryContext } from '../../contexts/CountryContext';
 import CountryCard from '../CountryCard/CountryCard';
-import NewCountry from '../NewCountry/NewCountry';
+import CountryForm from '../CountryForm/CountryForm';
 import AddNewButton from '../AddNewButton/AddNewButton';
 import './CountryGrid.css';
 import { UserContext } from '../../contexts/UserContext';
@@ -37,7 +37,7 @@ const CountryGrid = (props) => {
                 state.status === 'button' ?
                 <AddNewButton />
                 :
-                <NewCountry />
+                <CountryForm />
             }
         </div>
     );

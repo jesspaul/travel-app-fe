@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { CountryContext } from '../../contexts/CountryContext';
-import './NewCountry.css';
+import './CountryForm.css';
 
-const NewCountry = () => {
+const CountryForm = () => {
     const { state, handleSubmit, handleChange } = useContext(CountryContext);
 
     return (
-        <div className="NewCountry">
+        <div className="CountryForm">
             <h3>{ state.editMode ? 'Edit Country' : 'Add Country'}</h3>
             <form onSubmit={handleSubmit}>
                 <label>
@@ -26,4 +26,4 @@ const NewCountry = () => {
     );
 }
  
-export default NewCountry;
+export default CountryForm;
