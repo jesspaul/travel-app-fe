@@ -1,33 +1,30 @@
-// import { useContext } from 'react';
-// import { CountryContext } from '../../contexts/CountryContext';
-// import AddNewButton from '../AddNewButton/AddNewButton';
+import { useContext } from 'react';
+import { CountryContext } from '../../contexts/CountryContext';
+import AddNewButton from '../AddNewButton/AddNewButton';
 import City from "../City/City";
 import CityDetails from '../CityDetails/CityDetails';
-// import NewCity from '../NewCity/NewCity';
+import CityForm from '../CityForm/CityForm';
 import './CityList.css';
 
 const CityList = () => {
-    // const { state } = useContext(CountryContext);
+    const { state } = useContext(CountryContext);
     return (
-        <div className="CityList">
-            <City />
-            <CityDetails />
-            <City />
-            <CityDetails />
-            <City />
-            <CityDetails />
-            <City />
-            {/* {state.currentCountry.cities.length ?
-                state.currentCountry.cities.map(city => <City />)
-                : <div>No cities in list</div>
+        <ul className="CityList">
+            {state.currentCountry.cities.length ?
+                state.currentCountry.cities.map(city => 
+                <li>
+                    <City />
+                    <CityDetails />
+                </li>)
+                : <li>No cities in list</li>
             }
             {
                 state.status === 'button' ?
                 <AddNewButton />
                 :
-                <NewCity />
-            } */}
-        </div>
+                <CityForm />
+            }
+        </ul>
     );
 }
  

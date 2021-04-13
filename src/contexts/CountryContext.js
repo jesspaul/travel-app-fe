@@ -37,6 +37,23 @@ const CountryContextProvider = (props) => {
     }
   }
   
+  async function getCityData() {
+    if (!user) return;
+    try {
+      const URL = `http://localhost:3001/cities?countryId=${state.currentCountry._id}`;
+      const cities = await fetch(URL).then(res => res.json());
+      setState(prevState => ({
+        ...prevState,
+        currentCountry: {
+          ...prevState.currentCountry,
+          cities
+        }
+      }))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
   // load in list of all countries from restcountries api
   async function getCountryData() {
     try {
@@ -55,7 +72,12 @@ const CountryContextProvider = (props) => {
   useEffect(() => {
     getAppData();
     getCountryData();
+    getCityData();
   }, [user]);
+
+  // useEffect(() => {
+  //   getCityData();
+  // }, [state.currentCountry]);
 
   // handle form submission to add new country or update country in backend api
   async function handleSubmit(evt) {
