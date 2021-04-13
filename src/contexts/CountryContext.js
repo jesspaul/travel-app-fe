@@ -64,6 +64,7 @@ const CountryContextProvider = (props) => {
     evt.preventDefault();
     const BASE_URL = 'http://localhost:3001/countries';
 
+    // if adding a new country
     if (!state.editMode) {
       // find the country flag from restcountries api
       let restCountry = state.restCountriesData.find(elem => elem.name === state.newCountry.name);
@@ -102,22 +103,35 @@ const CountryContextProvider = (props) => {
         },
         status: 'button'
       }));
+    // if editing an existing country
     } else {
-      const { name, date } = state.newCountry;
-      console.log(state.newCountry)
-      console.log(name)
-      console.log(date)
+      // find the country flag from restcountries api
+      let restCountry = state.restCountriesData.find(elem => elem.name === state.newCountry.name);
+      state.newCountry.flagPath = restCountry.flag ? restCountry.flag : null;
+      // find an image of the country from unsplash api
+      const picResults = await searchPhoto(state.newCountry.name);
+      state.newCountry.imagePath = picResults.results[0].urls.regular;
+
+      const { name, date, flagPath, imagePath } = state.newCountry;
+
       const countries = await fetch(`${BASE_URL}/${state.currentCountry._id}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'Application/json'
         },
-        body: JSON.stringify({name, date})
+        body: JSON.stringify({name, date, flagPath, imagePath})
       }).then(res => res.json());
 
       setState(prevState => ({
         ...prevState,
         countries,
+        currentCountry: {
+          ...prevState.currentCountry,
+          name,
+          date,
+          flagPath,
+          imagePath
+        },
         newCountry: {
           name: null,
           visited: state.branch === 'history',
@@ -178,25 +192,18 @@ const CountryContextProvider = (props) => {
       countries
     }));
   }
-
-  async function handleEdit() {
+  
+  function toggleEditMode() {
     const current = state.currentCountry;
     setState(prevState => ({
       ...prevState,
-      // newCountry: {...current},
-      editMode: true
-    }));
-  }
-
-  function toggleEditMode() {
-    setState(prevState => ({
-      ...prevState,
-      editMode: prevState.editMode ? false : true
+      editMode: prevState.editMode ? false : true,
+      newCountry: prevState.editMode ? {...prevState.newCountry} : {...current},
     }));
   }
 
   return (
-    <CountryContext.Provider value={{state, setState, handleSubmit, handleChange, toggleStatus, toggleBranch, selectCountry, handleDelete, handleEdit, toggleEditMode}}>
+    <CountryContext.Provider value={{state, setState, handleSubmit, handleChange, toggleStatus, toggleBranch, selectCountry, handleDelete, toggleEditMode}}>
       {props.children}
     </CountryContext.Provider>
   )
