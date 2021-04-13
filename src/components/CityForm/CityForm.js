@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { CountryContext } from '../../contexts/CountryContext';
-import './NewCity.css';
+import './CityForm.css';
 
-const NewCity = () => {
+const CityForm = () => {
     const { state } = useContext(CountryContext);
     return (
-        <div className="NewCity">
+        <div className="CityForm">
             <h3>Add New City</h3>
             <form>
                 <label>
@@ -25,4 +25,4 @@ const NewCity = () => {
     );
 }
  
-export default NewCity;
+export default CityForm;
