@@ -146,9 +146,25 @@ const CityContextProvider = (props) => {
       editCityMode: prevState.editCityMode ? false : true,
     }));
   }
+
+  async function handleCityDelete() {
+    if(!user) return;
+    const BASE_URL = `http://localhost:3001/cities`;
+    const cities = await fetch(`${BASE_URL}/${cityState.currentCity._id}?countryId=${state.currentCountry._id}`, {
+      method: 'DELETE'
+    }).then(res => res.json());
+
+    setState(prevState => ({
+      ...prevState,
+      currentCountry: {
+        ...prevState.currentCountry,
+        cities,
+      },
+    }));
+  }
   
   return (
-    <CityContext.Provider value={{cityState, setCityState, handleCitySubmit, handleCityChange, selectCity, toggleCityEditMode}}>
+    <CityContext.Provider value={{cityState, setCityState, handleCitySubmit, handleCityChange, selectCity, toggleCityEditMode, handleCityDelete}}>
       {props.children}
     </CityContext.Provider>
   )
