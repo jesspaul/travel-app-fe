@@ -9,10 +9,9 @@ const CityContextProvider = (props) => {
   const { state, setState } = useContext(CountryContext);
 
   const [cityState, setCityState] = useState({
-    status: 'button',
-    branch: null,
     currentCity: {},
     editCityMode: false,
+    open: ''
   });
 
   // load in all cities from the backend api
@@ -136,7 +135,8 @@ const CityContextProvider = (props) => {
       ...prevState,
       currentCity: {
         ...clickedCity,
-      }
+      },
+      open: clickedCity.name
     }))
   }
 

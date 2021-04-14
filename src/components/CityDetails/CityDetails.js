@@ -1,10 +1,21 @@
+import { useContext } from 'react';
+import { CityContext } from '../../contexts/CityContext';
+import Detail from '../Detail/Detail';
 import './CityDetails.css';
 
 const CityDetails = (props) => {
+    const { cityState } = useContext(CityContext);
+
     return (
         <div className='CityDetails'>
-            Details for {props.city.name}<br></br>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque tempore minima ratione deserunt iste odio ex, quasi ipsa? Minima aliquam tempore pariatur mollitia sequi voluptas tenetur suscipit numquam cumque temporibus.
+            { props.city.name === cityState.open ? (
+                <ul>
+                    <li>Details for {props.city.name}</li>
+                    <Detail />
+                    <Detail />
+                    <Detail />
+                </ul>
+            ) : null }
         </div>
     );
 }
