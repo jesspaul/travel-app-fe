@@ -1,9 +1,9 @@
 import './City.css';
 
-const City = () => {
+const City = (props) => {
     return (
         <li className="City">
-            <h3>City Name</h3>
+            <h3>{props.city.name}</h3>
         </li>
     );
 }

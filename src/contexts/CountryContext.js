@@ -18,7 +18,13 @@ const CountryContextProvider = (props) => {
     },
     status: 'button',
     branch: null,
-    currentCountry: {},
+    currentCountry: {
+      newCity: {
+        name: null,
+        date: null,
+      },
+      cities: [],
+    },
     editMode: false,
   });
 
@@ -173,6 +179,80 @@ const CountryContextProvider = (props) => {
     }
   }
 
+  async function handleCitySubmit(evt) {
+    if (!user) return;
+
+    evt.preventDefault();
+    const BASE_URL = `http://localhost:3001/cities?countryId=${state.currentCountry._id}`;
+
+    // if adding a new city
+    if (!state.editMode) {
+      
+      // change date string to month, year
+      if (state.branch === 'history') {
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const year = state.currentCountry.newCity.date.slice(0, 4);
+        const month = months[parseInt(state.currentCountry.newCity.date.slice(5)) - 1];
+        state.currentCountry.newCity.date = `${month}, ${year}`;
+      }
+  
+      // make a post request to the backend api
+      const cities = await fetch(BASE_URL, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'Application/json'
+        },
+        body: JSON.stringify({...state.currentCountry.newCity})
+      }).then(res => res.json());
+  
+      // add country to state and set newCountry back to default
+      setState((prevState) => ({
+        ...prevState,
+        currentCountry: {
+          cities,
+          newCity: {
+            name: null,
+            date: null,
+          },
+        },
+        status: 'button'
+      }));
+    // if editing an existing city
+    } else {
+
+      // change date string to month, year
+      if (state.branch === 'history') {
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const year = state.currentCountry.newCity.date.slice(0, 4);
+        const month = months[parseInt(state.currentCountry.newCity.date.slice(5)) - 1];
+        state.currentCountry.newCity.date = `${month}, ${year}`;
+      }
+
+      const { name, date } = state.currentCountry.newCity;
+
+      const cities = await fetch(`${BASE_URL}/${state.currentCountry._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'Application/json'
+        },
+        body: JSON.stringify({name, date})
+      }).then(res => res.json());
+
+      setState(prevState => ({
+        ...prevState,
+        currentCountry: {
+          ...prevState.currentCountry,
+          cities,
+          newCity: {
+            name: null,
+            date: null,
+          },
+        },
+        editMode: false
+      }))
+    }
+  }
+
   // continuously update state as user types country name in input
   function handleChange(evt) {
     setState(prevState => ({
@@ -181,6 +261,18 @@ const CountryContextProvider = (props) => {
         ...prevState.newCountry,
         [evt.target.name]: evt.target.value,
         visited: state.branch === 'history'
+      }
+    }));
+  }
+
+  function handleCityChange(evt) {
+    setState(prevState => ({
+      ...prevState,
+      currentCountry: {
+        ...prevState.currentCountry,
+        newCity: {
+          [evt.target.name]: evt.target.value,
+        }
       }
     }));
   }
@@ -205,7 +297,14 @@ const CountryContextProvider = (props) => {
   function selectCountry(clickedCountry) {
     setState(prevState => ({
       ...prevState,
-      currentCountry: clickedCountry
+      currentCountry: {
+        ...clickedCountry,
+        cities: [],
+        newCity: {
+          name: null,
+          date: null
+        }
+      }
     }))
   }
 
@@ -232,7 +331,7 @@ const CountryContextProvider = (props) => {
   }
 
   return (
-    <CountryContext.Provider value={{state, setState, handleSubmit, handleChange, toggleStatus, toggleBranch, selectCountry, handleDelete, toggleEditMode}}>
+    <CountryContext.Provider value={{state, setState, handleSubmit, handleChange, toggleStatus, toggleBranch, selectCountry, handleDelete, toggleEditMode, handleCityChange, handleCitySubmit}}>
       {props.children}
     </CountryContext.Provider>
   )

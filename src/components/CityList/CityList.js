@@ -13,8 +13,8 @@ const CityList = () => {
             {state.currentCountry.cities.length ?
                 state.currentCountry.cities.map(city => 
                 <li>
-                    <City />
-                    <CityDetails />
+                    <City city={city} />
+                    <CityDetails city={city} />
                 </li>)
                 : <li>No cities in list</li>
             }

@@ -3,20 +3,20 @@ import { CountryContext } from '../../contexts/CountryContext';
 import './CityForm.css';
 
 const CityForm = () => {
-    const { state } = useContext(CountryContext);
+    const { state, handleCityChange, handleCitySubmit } = useContext(CountryContext);
     return (
         <div className="CityForm">
             <h3>Add New City</h3>
-            <form>
+            <form onSubmit={handleCitySubmit}>
                 <label>
                     City Name:
-                    <input name="name" value='' required />
+                    <input name="name" value={state.currentCountry.newCity.name} onChange={handleCityChange} required />
                 </label>
                 {
                     state.branch === 'history' &&
                 <label>
                     Date Visited:
-                    <input type='date' name="date" value='' required />
+                    <input type='date' name="date" value={state.currentCountry.newCity.date} onChange={handleCityChange} required />
                 </label>
                 }
                 <button>Add</button>
