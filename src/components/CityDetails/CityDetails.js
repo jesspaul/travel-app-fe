@@ -12,9 +12,7 @@ const CityDetails = (props) => {
                 <>
                     <ul>
                         <li>Details for {props.city.name}</li>
-                        <Detail />
-                        <Detail />
-                        <Detail />
+                        { cityState.currentCity.details.length ? cityState.currentCity.details.map((detail, idx) => <Detail key={idx} />) : <li>No Details</li>}
                     </ul>
                     <button className='add-new' >+ Add New</button>
                 </>

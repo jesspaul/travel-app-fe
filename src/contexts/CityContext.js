@@ -9,7 +9,11 @@ const CityContextProvider = (props) => {
   const { state, setState } = useContext(CountryContext);
 
   const [cityState, setCityState] = useState({
-    currentCity: {},
+    currentCity: {
+      newDetail: {
+        text: ''
+      }
+    },
     editCityMode: false,
     open: ''
   });
@@ -107,6 +111,7 @@ const CityContextProvider = (props) => {
       setCityState(prevState => ({
         ...prevState,
         currentCity: {
+          ...prevState.currentCity,
           name,
           date,
         },
@@ -134,6 +139,7 @@ const CityContextProvider = (props) => {
     setCityState(prevState => ({
       ...prevState,
       currentCity: {
+        ...prevState.currentCity,
         ...clickedCity,
       },
       open: clickedCity.name

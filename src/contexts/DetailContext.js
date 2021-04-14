@@ -10,36 +10,57 @@ const DetailContextProvider = (props) => {
   const { state, setState } = useContext(CountryContext);
   const { cityState, setCityState } = useContext(CityContext);
 
+  // load in all cities from the backend api
+  async function getDetailData() {
+    if (!user) return;
+    try {
+      const URL = `http://localhost:3001/details?countryId=${state.currentCountry._id}?cityId=${state.currentCity._id}`;
+      const details = await fetch(URL).then(res => res.json());
+      setCityState(prevState => ({
+        ...prevState,
+        currentCity: {
+          ...prevState.currentCity,
+          details
+        }
+      }))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
+  // make api requests only on first page load
+  useEffect(() => {
+    getDetailData();
+  }, [cityState.currentCity._id]);
+
   // handle form submission to add new detail or update detail in backend api
   async function handleDetailSubmit(evt) {
     if (!user) return;
 
     evt.preventDefault();
-    const BASE_URL = `http://localhost:3001/cities`;
+    const BASE_URL = `http://localhost:3001/details`;
 
     // if adding a new detail
     if (!cityState.editCityMode) {      
       // make a post request to the backend api
-      const cities = await fetch(`${BASE_URL}?countryId=${state.currentCountry._id}`, {
+      const details = await fetch(`${BASE_URL}?countryId=${state.currentCountry._id}?cityId=${cityState.currentCity._id}`, {
         method: 'POST',
         headers: {
             'Content-type': 'Application/json'
         },
-        body: JSON.stringify({...state.currentCountry.newCity})
+        body: JSON.stringify({...cityState.currentCity.newDetail})
       }).then(res => res.json());
   
       // add country to state and set newCountry back to default
       setState((prevState) => ({
         ...prevState,
-        currentCountry: {
+        currentCity: {
           ...prevState.currentCountry,
-          cities,
-          newCity: {
-            name: '',
-            date: '',
+          details,
+          newDetail: {
+            text: ''
           },
         },
-        status: 'button'
       }));
     // if editing an existing city
     } else {
@@ -74,12 +95,12 @@ const DetailContextProvider = (props) => {
 
   // continuously update state as user types city name in input
   function handleDetailChange(evt) {
-    setState(prevState => ({
+    setCityState(prevState => ({
       ...prevState,
-      currentCountry: {
-        ...prevState.currentCountry,
+      currentCity: {
+        ...prevState.currentCity,
         newCity: {
-          ...prevState.currentCountry.newCity,
+          ...prevState.currentCity.newDetail,
           [evt.target.name]: evt.target.value,
         }
       }
