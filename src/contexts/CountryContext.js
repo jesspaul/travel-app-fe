@@ -10,23 +10,22 @@ const CountryContextProvider = (props) => {
     countries: [],
     restCountriesData: [],
     newCountry: {
-      name: null,
+      name: '',
       visited: false,
-      uid: null,
-      flagPath: null,
-      imagePath: null
+      uid: '',
+      flagPath: '',
+      imagePath: ''
     },
     status: 'button',
     branch: null,
     currentCountry: {
       newCity: {
-        name: null,
-        date: null,
+        name: '',
+        date: '',
       },
       cities: [],
     },
     editMode: false,
-    editCityMode: false,
   });
 
   // load in all countries from the backend api
@@ -38,23 +37,6 @@ const CountryContextProvider = (props) => {
       setState(prevState => ({
         ...prevState,
         countries,
-      }))
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  
-  async function getCityData() {
-    if (!user) return;
-    try {
-      const URL = `http://localhost:3001/cities?countryId=${state.currentCountry._id}`;
-      const cities = await fetch(URL).then(res => res.json());
-      setState(prevState => ({
-        ...prevState,
-        currentCountry: {
-          ...prevState.currentCountry,
-          cities
-        }
       }))
     } catch (error) {
       console.log(error);
@@ -79,12 +61,7 @@ const CountryContextProvider = (props) => {
   useEffect(() => {
     getAppData();
     getCountryData();
-    getCityData();
   }, [user]);
-
-  // useEffect(() => {
-  //   getCityData();
-  // }, [state.currentCountry]);
 
   // handle form submission to add new country or update country in backend api
   async function handleSubmit(evt) {
@@ -180,79 +157,6 @@ const CountryContextProvider = (props) => {
     }
   }
 
-  async function handleCitySubmit(evt) {
-    if (!user) return;
-
-    evt.preventDefault();
-    const BASE_URL = `http://localhost:3001/cities`;
-
-    // if adding a new city
-    if (!state.editCityMode) {
-      // change date string to month, year
-      if (state.branch === 'history') {
-        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        const year = state.currentCountry.newCity.date.slice(0, 4);
-        const month = months[parseInt(state.currentCountry.newCity.date.slice(5)) - 1];
-        state.currentCountry.newCity.date = `${month}, ${year}`;
-      }
-  
-      // make a post request to the backend api
-      const cities = await fetch(`${BASE_URL}?countryId=${state.currentCountry._id}`, {
-        method: 'POST',
-        headers: {
-            'Content-type': 'Application/json'
-        },
-        body: JSON.stringify({...state.currentCountry.newCity})
-      }).then(res => res.json());
-  
-      // add country to state and set newCountry back to default
-      setState((prevState) => ({
-        ...prevState,
-        currentCountry: {
-          ...prevState.currentCountry,
-          cities,
-          newCity: {
-            name: '',
-            date: '',
-          },
-        },
-        status: 'button'
-      }));
-    // if editing an existing city
-    } else {
-      // change date string to month, year
-      if (state.branch === 'history') {
-        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        const year = state.currentCountry.newCity.date.slice(0, 4);
-        const month = months[parseInt(state.currentCountry.newCity.date.slice(5)) - 1];
-        state.currentCountry.newCity.date = `${month}, ${year}`;
-      }
-
-      const { name, date } = state.currentCountry.newCity;
-
-      const cities = await fetch(`${BASE_URL}/${state.currentCity._id}?countryId=${state.currentCountry._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'Application/json'
-        },
-        body: JSON.stringify({name, date})
-      }).then(res => res.json());
-
-      setState(prevState => ({
-        ...prevState,
-        currentCountry: {
-          ...prevState.currentCountry,
-          cities,
-          currentCity: {
-            name,
-            date,
-          },
-        },
-        editCityMode: false
-      }))
-    }
-  }
-
   // continuously update state as user types country name in input
   function handleChange(evt) {
     setState(prevState => ({
@@ -261,19 +165,6 @@ const CountryContextProvider = (props) => {
         ...prevState.newCountry,
         [evt.target.name]: evt.target.value,
         visited: state.branch === 'history'
-      }
-    }));
-  }
-
-  function handleCityChange(evt) {
-    setState(prevState => ({
-      ...prevState,
-      currentCountry: {
-        ...prevState.currentCountry,
-        newCity: {
-          ...prevState.currentCountry.newCity,
-          [evt.target.name]: evt.target.value,
-        }
       }
     }));
   }
@@ -301,23 +192,14 @@ const CountryContextProvider = (props) => {
       currentCountry: {
         ...clickedCountry,
         newCity: {
-          name: null,
-          date: null
-        }
+          name: '',
+          date: '',
+        },
       }
     }))
   }
 
-  // capture's data of the city card that was clicked
-  function selectCity(clickedCity) {
-    setState(prevState => ({
-      ...prevState,
-      currentCity: {
-        ...clickedCity,
-      }
-    }))
-  }
-
+  // delete a country
   async function handleDelete(countryId) {
     if(!user) return;
     const URL = `http://localhost:3001/countries/${countryId}`;
@@ -339,16 +221,9 @@ const CountryContextProvider = (props) => {
       newCountry: prevState.editMode ? {...prevState.newCountry} : {...current},
     }));
   }
-
-  function toggleCityEditMode() {
-    setState(prevState => ({
-      ...prevState,
-      editCityMode: prevState.editCityMode ? false : true,
-    }));
-}
   
   return (
-    <CountryContext.Provider value={{state, setState, handleSubmit, handleChange, toggleStatus, toggleBranch, selectCountry, handleDelete, toggleEditMode, handleCityChange, handleCitySubmit, toggleCityEditMode, selectCity}}>
+    <CountryContext.Provider value={{state, setState, handleSubmit, handleChange, toggleStatus, toggleBranch, selectCountry, handleDelete, toggleEditMode}}>
       {props.children}
     </CountryContext.Provider>
   )
