@@ -209,6 +209,7 @@ const CountryContextProvider = (props) => {
       setState((prevState) => ({
         ...prevState,
         currentCountry: {
+          ...prevState.currentCountry,
           cities,
           newCity: {
             name: null,
@@ -299,7 +300,6 @@ const CountryContextProvider = (props) => {
       ...prevState,
       currentCountry: {
         ...clickedCountry,
-        cities: [],
         newCity: {
           name: null,
           date: null

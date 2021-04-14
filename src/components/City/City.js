@@ -1,10 +1,12 @@
+import CityDetails from '../CityDetails/CityDetails';
 import './City.css';
 
 const City = (props) => {
     return (
-        <li className="City">
+        <div className="City">
             <h3>{props.city.name}</h3>
-        </li>
+            <CityDetails city={props.city} />
+        </div>
     );
 }
  
