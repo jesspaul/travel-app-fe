@@ -272,6 +272,7 @@ const CountryContextProvider = (props) => {
       currentCountry: {
         ...prevState.currentCountry,
         newCity: {
+          ...prevState.currentCountry.newCity,
           [evt.target.name]: evt.target.value,
         }
       }
