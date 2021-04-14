@@ -9,12 +9,15 @@ const CityDetails = (props) => {
     return (
         <div className='CityDetails'>
             { props.city.name === cityState.open ? (
-                <ul>
-                    <li>Details for {props.city.name}</li>
-                    <Detail />
-                    <Detail />
-                    <Detail />
-                </ul>
+                <>
+                    <ul>
+                        <li>Details for {props.city.name}</li>
+                        <Detail />
+                        <Detail />
+                        <Detail />
+                    </ul>
+                    <button className='add-new' >+ Add New</button>
+                </>
             ) : null }
         </div>
     );
