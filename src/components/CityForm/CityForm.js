@@ -6,7 +6,8 @@ const CityForm = () => {
     const { state, handleCityChange, handleCitySubmit } = useContext(CountryContext);
     return (
         <div className="CityForm">
-            <h3>Add New City</h3>
+            
+            <h3>{state.editCityMode ? 'Edit City' : 'Add New City'}</h3>
             <form onSubmit={handleCitySubmit}>
                 <label>
                     City Name:
@@ -19,7 +20,7 @@ const CityForm = () => {
                     <input type='date' name="date" value={state.currentCountry.newCity.date} onChange={handleCityChange} required />
                 </label>
                 }
-                <button>Add</button>
+                <button>{state.editCityMode ? 'Edit' : 'Add'}</button>
             </form>
         </div>
     );

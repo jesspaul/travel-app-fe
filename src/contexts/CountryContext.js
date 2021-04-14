@@ -26,6 +26,7 @@ const CountryContextProvider = (props) => {
       cities: [],
     },
     editMode: false,
+    editCityMode: false,
   });
 
   // load in all countries from the backend api
@@ -183,11 +184,10 @@ const CountryContextProvider = (props) => {
     if (!user) return;
 
     evt.preventDefault();
-    const BASE_URL = `http://localhost:3001/cities?countryId=${state.currentCountry._id}`;
+    const BASE_URL = `http://localhost:3001/cities`;
 
     // if adding a new city
-    if (!state.editMode) {
-      
+    if (!state.editCityMode) {
       // change date string to month, year
       if (state.branch === 'history') {
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -197,7 +197,7 @@ const CountryContextProvider = (props) => {
       }
   
       // make a post request to the backend api
-      const cities = await fetch(BASE_URL, {
+      const cities = await fetch(`${BASE_URL}?countryId=${state.currentCountry._id}`, {
         method: 'POST',
         headers: {
             'Content-type': 'Application/json'
@@ -212,15 +212,14 @@ const CountryContextProvider = (props) => {
           ...prevState.currentCountry,
           cities,
           newCity: {
-            name: null,
-            date: null,
+            name: '',
+            date: '',
           },
         },
         status: 'button'
       }));
     // if editing an existing city
     } else {
-
       // change date string to month, year
       if (state.branch === 'history') {
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -231,7 +230,7 @@ const CountryContextProvider = (props) => {
 
       const { name, date } = state.currentCountry.newCity;
 
-      const cities = await fetch(`${BASE_URL}/${state.currentCountry._id}`, {
+      const cities = await fetch(`${BASE_URL}/${state.currentCity._id}?countryId=${state.currentCountry._id}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'Application/json'
@@ -244,12 +243,12 @@ const CountryContextProvider = (props) => {
         currentCountry: {
           ...prevState.currentCountry,
           cities,
-          newCity: {
-            name: null,
-            date: null,
+          currentCity: {
+            name,
+            date,
           },
         },
-        editMode: false
+        editCityMode: false
       }))
     }
   }
@@ -309,6 +308,16 @@ const CountryContextProvider = (props) => {
     }))
   }
 
+  // capture's data of the city card that was clicked
+  function selectCity(clickedCity) {
+    setState(prevState => ({
+      ...prevState,
+      currentCity: {
+        ...clickedCity,
+      }
+    }))
+  }
+
   async function handleDelete(countryId) {
     if(!user) return;
     const URL = `http://localhost:3001/countries/${countryId}`;
@@ -331,8 +340,15 @@ const CountryContextProvider = (props) => {
     }));
   }
 
+  function toggleCityEditMode() {
+    setState(prevState => ({
+      ...prevState,
+      editCityMode: prevState.editCityMode ? false : true,
+    }));
+}
+  
   return (
-    <CountryContext.Provider value={{state, setState, handleSubmit, handleChange, toggleStatus, toggleBranch, selectCountry, handleDelete, toggleEditMode, handleCityChange, handleCitySubmit}}>
+    <CountryContext.Provider value={{state, setState, handleSubmit, handleChange, toggleStatus, toggleBranch, selectCountry, handleDelete, toggleEditMode, handleCityChange, handleCitySubmit, toggleCityEditMode, selectCity}}>
       {props.children}
     </CountryContext.Provider>
   )
