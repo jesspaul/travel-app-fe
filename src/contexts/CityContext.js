@@ -36,7 +36,7 @@ const CityContextProvider = (props) => {
   // make api requests only on first page load
   useEffect(() => {
     getCityData();
-  }, []);
+  }, [state.currentCountry._id]);
 
   // handle form submission to add new city or update city in backend api
   async function handleCitySubmit(evt) {
