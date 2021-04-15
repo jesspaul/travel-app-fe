@@ -10,26 +10,26 @@ const DetailContextProvider = (props) => {
   const { state } = useContext(CountryContext);
   const { cityState, setCityState } = useContext(CityContext);
 
-  // load in all cities from the backend api
-  async function getDetailData() {
-    if (!user) return;
-    try {
-      const URL = `https://travel-tracker-be.herokuapp.com/details?countryId=${state.currentCountry._id}&cityId=${cityState.currentCity._id}`;
-      const details = await fetch(URL).then(res => res.json());
-      setCityState(prevState => ({
-        ...prevState,
-        currentCity: {
-          ...prevState.currentCity,
-          details
-        }
-      }))
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  
   // make api requests only on first page load
   useEffect(() => {
+    // load in all cities from the backend api
+    async function getDetailData() {
+      if (!user) return;
+      try {
+        const URL = `https://travel-tracker-be.herokuapp.com/details?countryId=${state.currentCountry._id}&cityId=${cityState.currentCity._id}`;
+        const details = await fetch(URL).then(res => res.json());
+        setCityState(prevState => ({
+          ...prevState,
+          currentCity: {
+            ...prevState.currentCity,
+            details
+          }
+        }))
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  
     getDetailData();
   }, [cityState.currentCity._id]);
 

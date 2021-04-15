@@ -28,37 +28,37 @@ const CountryContextProvider = (props) => {
     editMode: false,
   });
 
-  // load in all countries from the backend api
-  async function getAppData() {
-    if (!user) return;
-    try {
-      const URL = `https://travel-tracker-be.herokuapp.com/countries?uid=${user.uid}`;
-      const countries = await fetch(URL).then(res => res.json());
-      setState(prevState => ({
-        ...prevState,
-        countries,
-      }))
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  
-  // load in list of all countries from restcountries api
-  async function getCountryData() {
-    try {
-      const BASE_URL = 'https://restcountries.eu/rest/v2/all';
-      const countriesData = await fetch(BASE_URL).then(res => res.json());
-      setState(prevState=> ({
-        ...prevState,
-        restCountriesData: countriesData
-      }))
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  
   // make api requests only on first page load
   useEffect(() => {
+    // load in all countries from the backend api
+    async function getAppData() {
+      if (!user) return;
+      try {
+        const URL = `https://travel-tracker-be.herokuapp.com/countries?uid=${user.uid}`;
+        const countries = await fetch(URL).then(res => res.json());
+        setState(prevState => ({
+          ...prevState,
+          countries,
+        }))
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    
+    // load in list of all countries from restcountries api
+    async function getCountryData() {
+      try {
+        const BASE_URL = 'https://restcountries.eu/rest/v2/all';
+        const countriesData = await fetch(BASE_URL).then(res => res.json());
+        setState(prevState=> ({
+          ...prevState,
+          restCountriesData: countriesData
+        }))
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  
     getAppData();
     getCountryData();
   }, [user]);

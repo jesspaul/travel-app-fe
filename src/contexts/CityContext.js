@@ -20,26 +20,26 @@ const CityContextProvider = (props) => {
     editDetailMode: '',
   });
 
-  // load in all cities from the backend api
-  async function getCityData() {
-    if (!user) return;
-    try {
-      const URL = `https://travel-tracker-be.herokuapp.com/cities?countryId=${state.currentCountry._id}`;
-      const cities = await fetch(URL).then(res => res.json());
-      setState(prevState => ({
-        ...prevState,
-        currentCountry: {
-          ...prevState.currentCountry,
-          cities
-        }
-      }))
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  
   // make api requests only on first page load
   useEffect(() => {
+    // load in all cities from the backend api
+    async function getCityData() {
+      if (!user) return;
+      try {
+        const URL = `https://travel-tracker-be.herokuapp.com/cities?countryId=${state.currentCountry._id}`;
+        const cities = await fetch(URL).then(res => res.json());
+        setState(prevState => ({
+          ...prevState,
+          currentCountry: {
+            ...prevState.currentCountry,
+            cities
+          }
+        }))
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  
     getCityData();
   }, [state.currentCountry._id]);
 
