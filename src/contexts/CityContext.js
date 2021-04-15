@@ -17,7 +17,7 @@ const CityContextProvider = (props) => {
     editCityMode: false,
     open: '',
     detailStatus: 'new',
-    editDetailMode: false,
+    editDetailMode: '',
   });
 
   // load in all cities from the backend api

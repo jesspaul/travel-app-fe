@@ -7,7 +7,7 @@ export const DetailContext = createContext();
 
 const DetailContextProvider = (props) => {
   const { user } = useContext(UserContext);
-  const { state, setState } = useContext(CountryContext);
+  const { state } = useContext(CountryContext);
   const { cityState, setCityState } = useContext(CityContext);
 
   // load in all cities from the backend api
@@ -41,7 +41,7 @@ const DetailContextProvider = (props) => {
     const BASE_URL = `http://localhost:3001/details`;
 
     // if adding a new detail
-    if (!cityState.editCityMode) {      
+    if (!cityState.editDetailMode) {      
       // make a post request to the backend api
       const details = await fetch(`${BASE_URL}?countryId=${state.currentCountry._id}&cityId=${cityState.currentCity._id}`, {
         method: 'POST',
@@ -68,32 +68,24 @@ const DetailContextProvider = (props) => {
 
     // if editing an existing city
     } else {
-      const { name, date } = state.currentCountry.newCity;
+      const { text } = cityState.currentCity.newDetail;
 
-      const cities = await fetch(`${BASE_URL}/${cityState.currentCity._id}?countryId=${state.currentCountry._id}&cityId=${cityState.currentCity._id}`, {
+      const details = await fetch(`${BASE_URL}/${cityState.editDetailMode}?countryId=${state.currentCountry._id}&cityId=${cityState.currentCity._id}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'Application/json'
         },
-        body: JSON.stringify({name, date})
+        body: JSON.stringify({text})
       }).then(res => res.json());
 
-      setState(prevState => ({
-        ...prevState,
-        currentCountry: {
-          ...prevState.currentCountry,
-          cities,
-        },
-      }));
-      
-      setCityState(prevState => ({
+      setCityState((prevState) => ({
         ...prevState,
         currentCity: {
-          name,
-          date,
+          ...prevState.currentCity,
+          details,
         },
-        editCityMode: false
-      }))
+        editDetailMode: ''
+      }));
     }
   }
 
@@ -118,10 +110,10 @@ const DetailContextProvider = (props) => {
     }));
   }
 
-  function toggleDetailEditMode() {
+  function toggleDetailEditMode(detailId) {
     setCityState(prevState => ({
       ...prevState,
-      editDetailMode: prevState.editDetailMode ? false : true,
+      editDetailMode: detailId,
     }));
   }
 
