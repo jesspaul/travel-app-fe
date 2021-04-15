@@ -7,10 +7,14 @@ const UserContextProvider = props => {
     const [user, setUser] = useState(null);
     
       useEffect(() => {
-        auth.onAuthStateChanged(userInfo => {
+        const cancelSubscription = auth.onAuthStateChanged(userInfo => {
           setUser(userInfo);
         });
-      }, []);
+
+        return function() { // cleanup function
+          cancelSubscription();
+        }
+      }, [user]);
 
       return (
           <UserContext.Provider value={{user, setUser}}>

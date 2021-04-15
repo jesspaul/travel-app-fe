@@ -24,7 +24,7 @@ const CityContextProvider = (props) => {
   async function getCityData() {
     if (!user) return;
     try {
-      const URL = `http://localhost:3001/cities?countryId=${state.currentCountry._id}`;
+      const URL = `https://travel-tracker-be.herokuapp.com/cities?countryId=${state.currentCountry._id}`;
       const cities = await fetch(URL).then(res => res.json());
       setState(prevState => ({
         ...prevState,
@@ -48,7 +48,7 @@ const CityContextProvider = (props) => {
     if (!user) return;
 
     evt.preventDefault();
-    const BASE_URL = `http://localhost:3001/cities`;
+    const BASE_URL = `https://travel-tracker-be.herokuapp.com/cities`;
 
     // if adding a new city
     if (!cityState.editCityMode) {
@@ -157,7 +157,7 @@ const CityContextProvider = (props) => {
 
   async function handleCityDelete() {
     if(!user) return;
-    const BASE_URL = `http://localhost:3001/cities`;
+    const BASE_URL = `https://travel-tracker-be.herokuapp.com/cities`;
     const cities = await fetch(`${BASE_URL}/${cityState.currentCity._id}?countryId=${state.currentCountry._id}`, {
       method: 'DELETE'
     }).then(res => res.json());

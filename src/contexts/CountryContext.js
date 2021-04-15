@@ -32,7 +32,7 @@ const CountryContextProvider = (props) => {
   async function getAppData() {
     if (!user) return;
     try {
-      const URL = `http://localhost:3001/countries?uid=${user.uid}`;
+      const URL = `https://travel-tracker-be.herokuapp.com/countries?uid=${user.uid}`;
       const countries = await fetch(URL).then(res => res.json());
       setState(prevState => ({
         ...prevState,
@@ -68,7 +68,7 @@ const CountryContextProvider = (props) => {
     if (!user) return;
 
     evt.preventDefault();
-    const BASE_URL = 'http://localhost:3001/countries';
+    const BASE_URL = 'https://travel-tracker-be.herokuapp.com/countries';
 
     // if adding a new country
     if (!state.editMode) {
@@ -202,7 +202,7 @@ const CountryContextProvider = (props) => {
   // delete a country
   async function handleDelete(countryId) {
     if(!user) return;
-    const URL = `http://localhost:3001/countries/${countryId}`;
+    const URL = `https://travel-tracker-be.herokuapp.com/countries/${countryId}`;
     const countries = await fetch(URL, {
       method: 'DELETE'
     }).then(res => res.json());

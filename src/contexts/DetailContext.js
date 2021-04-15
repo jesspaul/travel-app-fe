@@ -14,7 +14,7 @@ const DetailContextProvider = (props) => {
   async function getDetailData() {
     if (!user) return;
     try {
-      const URL = `http://localhost:3001/details?countryId=${state.currentCountry._id}&cityId=${cityState.currentCity._id}`;
+      const URL = `https://travel-tracker-be.herokuapp.com/details?countryId=${state.currentCountry._id}&cityId=${cityState.currentCity._id}`;
       const details = await fetch(URL).then(res => res.json());
       setCityState(prevState => ({
         ...prevState,
@@ -38,7 +38,7 @@ const DetailContextProvider = (props) => {
     if (!user) return;
 
     evt.preventDefault();
-    const BASE_URL = `http://localhost:3001/details`;
+    const BASE_URL = `https://travel-tracker-be.herokuapp.com/details`;
 
     // if adding a new detail
     if (!cityState.editDetailMode) {      
@@ -119,7 +119,7 @@ const DetailContextProvider = (props) => {
 
   async function handleDetailDelete(detailId) {
     if(!user) return;
-    const BASE_URL = `http://localhost:3001/details`;
+    const BASE_URL = `https://travel-tracker-be.herokuapp.com/details`;
     const details = await fetch(`${BASE_URL}/${detailId}?countryId=${state.currentCountry._id}&cityId=${cityState.currentCity._id}`, {
       method: 'DELETE'
     }).then(res => res.json());
