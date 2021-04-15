@@ -12,6 +12,7 @@ const CountryGrid = (props) => {
     const { state, selectCountry } = useContext(CountryContext);
 
     const renderCards = () => {
+        if (!user) return;
         if (props.branch === 'history') {
             return state.countries.map((country, idx) =>
                 country.visited && 
