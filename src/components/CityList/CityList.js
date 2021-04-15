@@ -33,7 +33,12 @@ const CityList = (props) => {
                     props.state.status === 'button' ?
                     <button className='add-new' onClick={props.toggleStatus}>+ Add New</button>
                     :
-                    <CityForm />
+                    <CityForm
+                        cityState={props.cityState}
+                        handleCitySubmit={props.handleCitySubmit}
+                        state={props.state}
+                        handleCityChange={props.handleCityChange}
+                    />
                 }
         </div>
     );

@@ -1,9 +1,9 @@
 import './CityForm.css';
 
 const CityForm = (props) => {
+    console.log(props.cityState)
     return (
         <div className="CityForm">
-            
             <h3>{props.cityState.editCityMode ? 'Edit City' : 'Add New City'}</h3>
             <form onSubmit={props.handleCitySubmit}>
                 <label>

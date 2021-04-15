@@ -28,7 +28,13 @@ const CountryDetails = (props) => {
             <Link to={`/${props.state.branch}`}>
                 <button onClick={() => props.handleDelete(props.state.currentCountry._id)}>Delete Country</button>
             </Link>
-            { props.state.editMode ? <CountryForm /> : <button onClick={props.toggleEditMode}>Edit Country</button>}
+            { props.state.editMode ?
+            <CountryForm
+                state={props.state}
+                handleSubmit={props.handleSubmit}
+                handleChange={props.handleChange}
+            />
+            : <button onClick={props.toggleEditMode}>Edit Country</button>}
         </div>
     );
 }
