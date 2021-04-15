@@ -9,10 +9,10 @@ const Detail = (props) => {
     const { cityState } = useContext(CityContext);
     return (
         <li>
-            {props.detail.text}
-            { cityState.editDetailMode === props.detail._id ? <DetailForm /> : <button className='detail-button' onClick={() => toggleDetailEditMode(props.detail._id)}>E</button> }
+            <p className="detail-text">{props.detail.text}</p>
+            { cityState.editDetailMode === props.detail._id ? <DetailForm /> : <button className='detail-button' onClick={() => toggleDetailEditMode(props.detail._id)}><i class="fas fa-pencil-alt"></i></button> }
             
-            <button className='detail-button' onClick={() => handleDetailDelete(props.detail._id)}>X</button>
+            <button className='detail-button' onClick={() => handleDetailDelete(props.detail._id)}><i class="fas fa-trash-alt"></i></button>
         </li>
     );
 }

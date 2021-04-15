@@ -1,3 +1,14 @@
+.detail-text {
+    display: inline;
+    margin-right: 10px;
+}
+
 .detail-button {
-    width: 30px;
+    padding: 0;
+    background-color: transparent;
+    color: #9a9f8f;
+    text-align: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 5px 0 5px 2px;
 }
