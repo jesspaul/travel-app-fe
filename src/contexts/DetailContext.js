@@ -14,7 +14,7 @@ const DetailContextProvider = (props) => {
   async function getDetailData() {
     if (!user) return;
     try {
-      const URL = `http://localhost:3001/details?countryId=${state.currentCountry._id}?cityId=${state.currentCity._id}`;
+      const URL = `http://localhost:3001/details?countryId=${state.currentCountry._id}&cityId=${cityState.currentCity._id}`;
       const details = await fetch(URL).then(res => res.json());
       setCityState(prevState => ({
         ...prevState,
@@ -107,10 +107,17 @@ const DetailContextProvider = (props) => {
     }));
   }
 
+  function toggleDetailStatus() {
+    setCityState(prevState => ({
+      ...prevState,
+      detailStatus: 'form',
+    }));
+  }
+
   function toggleDetailEditMode() {
     setCityState(prevState => ({
       ...prevState,
-      editCityMode: prevState.editCityMode ? false : true,
+      detailEditMode: prevState.editCityMode ? false : true,
     }));
   }
 
@@ -131,7 +138,7 @@ const DetailContextProvider = (props) => {
   }
   
   return (
-    <DetailContext.Provider value={{handleDetailSubmit, handleDetailChange, toggleDetailEditMode, handleDetailDelete}}>
+    <DetailContext.Provider value={{handleDetailSubmit, handleDetailChange, toggleDetailEditMode, handleDetailDelete, toggleDetailStatus}}>
       {props.children}
     </DetailContext.Provider>
   )
