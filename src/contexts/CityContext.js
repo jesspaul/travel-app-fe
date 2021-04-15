@@ -41,7 +41,7 @@ const CityContextProvider = (props) => {
     }
   
     getCityData();
-  }, [state.currentCountry._id]);
+  }, [state.currentCountry._id, setState, user]);
 
   // handle form submission to add new city or update city in backend api
   async function handleCitySubmit(evt) {

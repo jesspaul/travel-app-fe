@@ -31,7 +31,7 @@ const DetailContextProvider = (props) => {
     }
   
     getDetailData();
-  }, [cityState.currentCity._id]);
+  }, [cityState.currentCity._id, setCityState, state.currentCountry._id, user]);
 
   // handle form submission to add new detail or update detail in backend api
   async function handleDetailSubmit(evt) {
