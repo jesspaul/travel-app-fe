@@ -10,7 +10,10 @@ const City = (props) => {
     return (
         <div className="City">
             <h3 onClick={() => selectCity(props.city)}>{props.city.name}</h3>
-            <CityDetails city={props.city} />
+
+            { cityState.currentCity.name === props.city.name ? <CityDetails /> : <div></div> }
+            
+            
             { cityState.editCityMode ? <CityForm /> : <button onClick={toggleCityEditMode}>Edit City</button>}
             <button onClick={handleCityDelete}>Delete</button>
         </div>

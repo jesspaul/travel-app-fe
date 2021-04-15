@@ -43,7 +43,7 @@ const DetailContextProvider = (props) => {
     // if adding a new detail
     if (!cityState.editCityMode) {      
       // make a post request to the backend api
-      const details = await fetch(`${BASE_URL}?countryId=${state.currentCountry._id}?cityId=${cityState.currentCity._id}`, {
+      const details = await fetch(`${BASE_URL}?countryId=${state.currentCountry._id}&cityId=${cityState.currentCity._id}`, {
         method: 'POST',
         headers: {
             'Content-type': 'Application/json'
@@ -55,7 +55,7 @@ const DetailContextProvider = (props) => {
       setState((prevState) => ({
         ...prevState,
         currentCity: {
-          ...prevState.currentCountry,
+          ...prevState.currentCity,
           details,
           newDetail: {
             text: ''
@@ -99,7 +99,7 @@ const DetailContextProvider = (props) => {
       ...prevState,
       currentCity: {
         ...prevState.currentCity,
-        newCity: {
+        newDetail: {
           ...prevState.currentCity.newDetail,
           [evt.target.name]: evt.target.value,
         }
@@ -117,24 +117,24 @@ const DetailContextProvider = (props) => {
   function toggleDetailEditMode() {
     setCityState(prevState => ({
       ...prevState,
-      detailEditMode: prevState.editCityMode ? false : true,
+      editDetailMode: prevState.editDetailMode ? false : true,
     }));
   }
 
   async function handleDetailDelete() {
     if(!user) return;
     const BASE_URL = `http://localhost:3001/cities`;
-    const cities = await fetch(`${BASE_URL}/${cityState.currentCity._id}?countryId=${state.currentCountry._id}`, {
-      method: 'DELETE'
-    }).then(res => res.json());
+    // const cities = await fetch(`${BASE_URL}/${cityState.currentCity._id}?countryId=${state.currentCountry._id}`, {
+    //   method: 'DELETE'
+    // }).then(res => res.json());
 
-    setState(prevState => ({
-      ...prevState,
-      currentCountry: {
-        ...prevState.currentCountry,
-        cities,
-      },
-    }));
+    // setState(prevState => ({
+    //   ...prevState,
+    //   currentCountry: {
+    //     ...prevState.currentCountry,
+    //     cities,
+    //   },
+    // }));
   }
   
   return (
