@@ -70,7 +70,7 @@ const DetailContextProvider = (props) => {
     } else {
       const { name, date } = state.currentCountry.newCity;
 
-      const cities = await fetch(`${BASE_URL}/${cityState.currentCity._id}?countryId=${state.currentCountry._id}`, {
+      const cities = await fetch(`${BASE_URL}/${cityState.currentCity._id}?countryId=${state.currentCountry._id}&cityId=${cityState.currentCity._id}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'Application/json'
@@ -125,20 +125,20 @@ const DetailContextProvider = (props) => {
     }));
   }
 
-  async function handleDetailDelete() {
+  async function handleDetailDelete(detailId) {
     if(!user) return;
-    const BASE_URL = `http://localhost:3001/cities`;
-    // const cities = await fetch(`${BASE_URL}/${cityState.currentCity._id}?countryId=${state.currentCountry._id}`, {
-    //   method: 'DELETE'
-    // }).then(res => res.json());
+    const BASE_URL = `http://localhost:3001/details`;
+    const details = await fetch(`${BASE_URL}/${detailId}?countryId=${state.currentCountry._id}&cityId=${cityState.currentCity._id}`, {
+      method: 'DELETE'
+    }).then(res => res.json());
 
-    // setState(prevState => ({
-    //   ...prevState,
-    //   currentCountry: {
-    //     ...prevState.currentCountry,
-    //     cities,
-    //   },
-    // }));
+    setCityState((prevState) => ({
+      ...prevState,
+      currentCity: {
+        ...prevState.currentCity,
+        details,
+      },
+    }));
   }
   
   return (

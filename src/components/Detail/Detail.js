@@ -8,7 +8,7 @@ const Detail = (props) => {
         <li>
             {props.detail.text}
             <button className='detail-button' onClick={handleDetailChange}>E</button>
-            <button className='detail-button' onClick={handleDetailDelete}>X</button>
+            <button className='detail-button' onClick={() => handleDetailDelete(props.detail._id)}>X</button>
         </li>
     );
 }
