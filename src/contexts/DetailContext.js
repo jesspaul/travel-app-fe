@@ -52,7 +52,7 @@ const DetailContextProvider = (props) => {
       }).then(res => res.json());
   
       // add country to state and set newCountry back to default
-      setState((prevState) => ({
+      setCityState((prevState) => ({
         ...prevState,
         currentCity: {
           ...prevState.currentCity,
@@ -62,6 +62,10 @@ const DetailContextProvider = (props) => {
           },
         },
       }));
+
+      let textarea = document.getElementById('detail-textarea')
+      textarea.value = '';
+
     // if editing an existing city
     } else {
       const { name, date } = state.currentCountry.newCity;
