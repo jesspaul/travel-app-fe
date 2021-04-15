@@ -1,29 +1,23 @@
-import { useContext } from 'react';
-import { CityContext } from '../../contexts/CityContext';
-import { CountryContext } from '../../contexts/CountryContext';
 import './CityForm.css';
 
-const CityForm = () => {
-    const { state } = useContext(CountryContext);
-    const { cityState, handleCityChange, handleCitySubmit } = useContext(CityContext);
-
+const CityForm = (props) => {
     return (
         <div className="CityForm">
             
-            <h3>{cityState.editCityMode ? 'Edit City' : 'Add New City'}</h3>
-            <form onSubmit={handleCitySubmit}>
+            <h3>{props.cityState.editCityMode ? 'Edit City' : 'Add New City'}</h3>
+            <form onSubmit={props.handleCitySubmit}>
                 <label>
                     City Name:
-                    <input name="name" value={state.currentCountry.newCity.name} onChange={handleCityChange} required />
+                    <input name="name" value={props.state.currentCountry.newCity.name} onChange={props.handleCityChange} required />
                 </label>
                 {
-                    state.branch === 'history' &&
+                    props.state.branch === 'history' &&
                 <label>
                     Date Visited:
-                    <input type='date' name="date" value={state.currentCountry.newCity.date} onChange={handleCityChange} required />
+                    <input type='date' name="date" value={props.state.currentCountry.newCity.date} onChange={props.handleCityChange} required />
                 </label>
                 }
-                <button>{cityState.editCityMode ? 'Edit' : 'Add'}</button>
+                <button>{props.cityState.editCityMode ? 'Edit' : 'Add'}</button>
             </form>
         </div>
     );

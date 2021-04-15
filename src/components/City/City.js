@@ -1,21 +1,33 @@
-import { useContext } from 'react';
-import { CityContext } from '../../contexts/CityContext';
 import CityDetails from '../CityDetails/CityDetails';
 import CityForm from '../CityForm/CityForm';
 import './City.css';
 
 const City = (props) => {
-    const { cityState, toggleCityEditMode, selectCity, handleCityDelete } = useContext(CityContext);
-
     return (
         <div className="City">
-            <h3 onClick={() => selectCity(props.city)}>{props.city.name} { cityState.open === props.city.name ? <i class="fa fa-caret-up"></i> : <i class="fa fa-caret-down"></i> }</h3>
+            <h3 onClick={() => props.selectCity(props.city)}>{props.city.name} { props.cityState.open === props.city.name ? <i class="fa fa-caret-up"></i> : <i class="fa fa-caret-down"></i> }</h3>
 
-            { cityState.currentCity.name === props.city.name ? <CityDetails /> : <div></div> }
+            { props.cityState.currentCity.name === props.city.name ?
+            <CityDetails
+                cityState={props.cityState}
+                toggleDetailStatus={props.toggleDetailStatus}
+                toggleDetailEditMode={props.toggleDetailEditMode}
+                handleDetailDelete={props.handleDetailDelete}
+                handleDetailChange={props.handleDetailChange}
+                handleDetailSubmit={props.handleDetailSubmit}
+            />
+            : <div></div> }
             
             
-            { cityState.editCityMode ? <CityForm /> : <button onClick={toggleCityEditMode}>Edit City</button>}
-            <button onClick={handleCityDelete}>Delete</button>
+            { props.cityState.editCityMode ?
+            <CityForm
+                cityState={props.cityState}
+                handleCitySubmit={props.handleCitySubmit}
+                state={props.state}
+                handleCityChange={props.handleCityChange}
+            />
+            : <button onClick={props.toggleCityEditMode}>Edit City</button>}
+            <button onClick={props.handleCityDelete}>Delete</button>
         </div>
     );
 }

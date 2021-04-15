@@ -1,29 +1,22 @@
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { CountryContext } from '../../contexts/CountryContext';
 import CountryCard from '../CountryCard/CountryCard';
 import CountryForm from '../CountryForm/CountryForm';
-import AddNewButton from '../AddNewButton/AddNewButton';
 import './CountryGrid.css';
-import { UserContext } from '../../contexts/UserContext';
 
 const CountryGrid = (props) => {
-    const { user } = useContext(UserContext);
-    const { state, selectCountry } = useContext(CountryContext);
-
     const renderCards = () => {
-        if (!user) return;
+        if (!props.user) return;
         if (props.branch === 'history') {
-            return state.countries.map((country, idx) =>
+            return props.state.countries.map((country, idx) =>
                 country.visited && 
-                <Link className='body-link' to='/details' key={idx} onClick={() => selectCountry(country)}>
+                <Link className='body-link' to='/details' key={idx} onClick={() => props.selectCountry(country)}>
                     <CountryCard country={country}/>
                 </Link>
             );
         } else if (props.branch === 'future') {
-            return state.countries.map((country, idx) => (
+            return props.state.countries.map((country, idx) => (
                 !country.visited && 
-                <Link className='body-link' to='/details' key={idx} onClick={() => selectCountry(country)}>
+                <Link className='body-link' to='/details' key={idx} onClick={() => props.selectCountry(country)}>
                     <CountryCard country={country}/>
                 </Link>
             ))
@@ -31,14 +24,18 @@ const CountryGrid = (props) => {
     }
     return (
         <div className="CountryGrid">
-            {state.countries.length ? renderCards()
+            {props.state.countries.length ? renderCards()
                 : <div>No Countries in List</div>
             }
             {
-                state.status === 'button' ?
-                <AddNewButton />
+                props.state.status === 'button' ?
+                <button className='add-new' onClick={props.toggleStatus}>+ Add New</button>
                 :
-                <CountryForm />
+                <CountryForm
+                    state={props.state}
+                    handleSubmit={props.handleSubmit}
+                    handleChange={props.handleChange}
+                />
             }
         </div>
     );
