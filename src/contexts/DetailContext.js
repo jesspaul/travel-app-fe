@@ -61,10 +61,8 @@ const DetailContextProvider = (props) => {
             text: ''
           },
         },
+        detailStatus: 'new'
       }));
-
-      let textarea = document.getElementById('detail-textarea')
-      textarea.value = '';
 
     // if editing an existing city
     } else {
