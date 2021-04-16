@@ -29,8 +29,12 @@ This SPA was created for a user to save a list of countries they've visited and 
 ![Wireframe showing country details](./src/img/wireframe-countrydetails.png)
 
 ## Screenshots
+![Screenshot showing home page](./src/img/homepage.png)
+![Screenshot showing history page](./src/img/historypage.png)
+![Screenshot showing country details](./src/img/countrydetails.png)
+![Screenshot showing new city](./src/img/newcity.png)
 
 ## Future Goals
 * Allow the user to upload personal photos
-* Fine tune styling with custom fonts, more sophisticated layout
+* Fine tune styling with custom fonts, more sophisticated layout, CSS transitions
 * Fix bug that breaks app when user refreshes page
