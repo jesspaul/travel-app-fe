@@ -20,12 +20,29 @@ button {
   font-weight: bold;
   border-radius: .5rem;
   padding: 10px;
-  width: 200px;
+  /* width: 200px; */
   transition: .4s;
+  margin: 10px;
 }
 
 button:hover {
   background-color: white;
   cursor: pointer;
   box-shadow: 5px 5px 8px 1px #dfd5cd;
+}
+
+.big-button {
+  width: 200px;
+}
+
+.med-button {
+  width: 100px;
+}
+
+.form-submit {
+  text-align: center;
+  width: fit-content;
+  height: fit-content;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }

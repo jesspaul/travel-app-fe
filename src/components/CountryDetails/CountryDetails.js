@@ -15,10 +15,10 @@ const CountryDetails = () => {
             {state.currentCountry.date && <h3 className='date-visited'>{state.currentCountry.date}</h3>}
             <img className='country-image' src={state.currentCountry.imagePath ? state.currentCountry.imagePath : placeholderImg} alt={state.currentCountry.name}/>
             <CityList />
+            { state.editMode ? <CountryForm /> : <button className='med-button' onClick={toggleEditMode}><i class="fas fa-pencil-alt"></i> Country</button>}
             <Link to={`/${state.branch}`}>
-                <button onClick={() => handleDelete(state.currentCountry._id)}>Delete Country</button>
+                <button className='med-button' onClick={() => handleDelete(state.currentCountry._id)}><i class="fas fa-trash-alt"></i> Country</button>
             </Link>
-            { state.editMode ? <CountryForm /> : <button onClick={toggleEditMode}>Edit Country</button>}
         </div>
     );
 }

@@ -1,0 +1,21 @@
+.DetailForm {
+    background-color: #EaEaEa;
+    border-radius: 1rem;
+    width: fit-content;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.DetailForm form {
+    display: flex;
+    align-items: center;
+}
+
+.DetailForm form > * {
+    margin: 8px;
+}
+
+.DetailForm textarea {
+    height: 120px;
+    width: 230px;
+}

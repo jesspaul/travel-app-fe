@@ -1,5 +1,8 @@
 .City {
+    padding-top: 10px;
+    padding-bottom: 30px;
     margin-bottom: 10px;
+    border-bottom: 1px solid #C0C4B6;
 }
 
 .City h3 {

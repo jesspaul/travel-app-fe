@@ -1,12 +1,11 @@
 import { useContext } from 'react';
 import { CountryContext } from '../../contexts/CountryContext';
-import AddNewButton from '../AddNewButton/AddNewButton';
 import City from "../City/City";
 import CityForm from '../CityForm/CityForm';
 import './CityList.css';
 
 const CityList = () => {
-    const { state } = useContext(CountryContext);
+    const { state, toggleStatus } = useContext(CountryContext);
     return (
         <div className="CityList">
             <ul>
@@ -20,7 +19,7 @@ const CityList = () => {
             </ul>
                 {
                     state.status === 'button' ?
-                    <AddNewButton />
+                    <button className='big-button' onClick={toggleStatus}><i class="fas fa-plus"></i> New City</button>
                     :
                     <CityForm />
                 }

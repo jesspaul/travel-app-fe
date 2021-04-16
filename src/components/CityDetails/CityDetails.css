@@ -1,4 +1,14 @@
-.CityDetails {
+.details {
     margin-left: 30px;
-    margin-bottom: 30px;
+}
+
+.buttons {
+    margin: 0;
+}
+
+#new-detail {
+    width: fit-content;
+    height: fit-content;
+    padding: .25rem .5rem;
+
 }

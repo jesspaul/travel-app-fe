@@ -3,13 +3,12 @@ import { Link } from 'react-router-dom';
 import { CountryContext } from '../../contexts/CountryContext';
 import CountryCard from '../CountryCard/CountryCard';
 import CountryForm from '../CountryForm/CountryForm';
-import AddNewButton from '../AddNewButton/AddNewButton';
 import './CountryGrid.css';
 import { UserContext } from '../../contexts/UserContext';
 
 const CountryGrid = (props) => {
     const { user } = useContext(UserContext);
-    const { state, selectCountry } = useContext(CountryContext);
+    const { state, selectCountry, toggleStatus } = useContext(CountryContext);
 
     const renderCards = () => {
         if (!user) return;
@@ -36,7 +35,7 @@ const CountryGrid = (props) => {
             }
             {
                 state.status === 'button' ?
-                <AddNewButton />
+                <button className='big-button' onClick={toggleStatus}><i class="fas fa-plus"></i> New Country</button>
                 :
                 <CountryForm />
             }
